@@ -51,5 +51,13 @@ module Potepanec
     config.generators.stylesheets    = false
     config.generators.javascripts    = false
     config.generators.helper         = false
+
+    # Rspec config!
+    config.generators do |g|
+      g.test_framework :rspec,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false
+    end
   end
 end
