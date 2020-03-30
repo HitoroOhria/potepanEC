@@ -48,6 +48,10 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rails-erd'
   gem 'annotate'
+  gem 'capybara'
+  gem 'webdrivers'
+  gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :development do
