@@ -48,39 +48,24 @@ jobs:
           paths:
             - vendor/bundle
 
-  heroku_deploy:
-    working_directory: ~/potepanec
-    docker:
-      - image: sue445/heroku-cli
+  aws_deploy:
+    machine:
+      image: circleci/classic:edge
     steps:
       - checkout
-      - build-tools/install-ci-tools
-      - jq/install
+      - add_ssh_keys:
       - run:
-          name: Identify who I am
-          command: echo 'export MY_EMAIL=`heroku auth:whoami | tail -n 1`' >> $BASH_ENV
+          name: SSH Connecting for EC2
+          command: ssh ${USER_NAME}@${HOST_NAME}
       - run:
-          name: Identify Heroku app names to destroy
-          command: echo 'export APP_NAMES_TO_REMOVE=`heroku apps --json | jq -r "map(select(.owner.email == "\"$MY_EMAIL\"" and (.name | contains(\"potepanec\")))) | sort_by(.updated_at) | reverse | .[5:] | .[].name"`' >> $BASH_ENV
+          name: cd app_dir
+          command: cd /var/www/rails/potepanec
       - run:
-          name: Delete old apps if needed
-          command: for app_name in $APP_NAMES_TO_REMOVE; do heroku apps:destroy -a $app_name -c $app_name; done
+          name: Run git pull
+          command: git pull
       - run:
-          name: Define Heroku app name to create
-          command: timestamp=`date +%Y%m%d%H%M%S` && echo "export HEROKU_APP_NAME=potepanec-$timestamp" >> $BASH_ENV
-      - run:
-          name: Create fresh Heroku app
-          command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin
-      - run:
-          name: Deploy
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-      - run:
-          name: Run post-deploy tasks
-          command: |
-            heroku config:set AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-            heroku run bin/rails db:migrate
-            heroku run bin/rails runner "['products', 'taxons', 'option_values', 'product_option_types', 'product_properties', 'variants', 'assets'].each { |table| Spree::Sample.load_sample(table) }"
-            heroku run bin/rails runner db/seeds/potepan_suggest.rb
+          name: Run migration
+          command: rails db:migrate RAILS_ENV=production
 
 orbs:
   build-tools: circleci/build-tools@2.6.3
@@ -91,7 +76,7 @@ workflows:
     jobs:
       - rspec
       - rubocop
-      - heroku_deploy:
+      - aws_deploy:
           requires:
             - rspec
             - rubocop
