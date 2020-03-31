@@ -6,7 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
@@ -14,5 +13,4 @@ Spree::Product.create!(name: "rails tote",
                        slug: "railstote",
                        price: 9800,
                        description: "Railsロゴ入りのトートバックです。装備すると、プログラミング力が＋３上がります。Railsチュートリアルを抜けた先のお店に並んでいます。",
-                       shipping_category_id: 1
-                      )
+                       shipping_category_id: 1)

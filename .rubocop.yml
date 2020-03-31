@@ -1,0 +1,31 @@
+inherit_from: .rubocop_todo.yml
+
+DotPosition:
+  Enabled: false
+
+EmptyLineAfterMagicComment:
+  Enabled: false
+
+EmptyLinesAroundBlockBody:
+  Enabled: false
+
+EmptyLinesAroundClassBody:
+  Enabled: false
+
+EmptyLinesAroundModuleBody:
+  Enabled: false
+
+MultilineMethodCallIndentation:
+  Enabled: false
+
+SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+TrailingEmptyLines:
+  EnforcedStyle: final_blank_line
+
+NonDeterministicRequireOrder:
+  Enabled: false
+
+UnusedBlockArgument:
+  Enabled: false
