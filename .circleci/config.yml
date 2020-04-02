@@ -1,29 +1,29 @@
 version: 2.1
 jobs:
-  rspec:
-    working_directory: ~/potepanec
-    docker:
-      - image: circleci/ruby
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Setup environment variable
-          command: |
-            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
-      - run:
-          name: Start containers and verify it is working
-          command: |
-            set -x
-            docker-compose up -d
-            docker exec potepanec_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
-      - run:
-          name: Setup database
-          command: |
-            docker-compose exec potepanec bash -c 'yes n | bundle exec rails g spree:install --migrate --seed --sample --auto_accept'
-      - run:
-          name: Run rspec
-          command: docker-compose exec potepanec rspec
+#  rspec:
+#    working_directory: ~/potepanec
+#    docker:
+#      - image: circleci/ruby
+#    steps:
+#      - checkout
+#      - setup_remote_docker
+#      - run:
+#          name: Setup environment variable
+#          command: |
+#            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
+#      - run:
+#          name: Start containers and verify it is working
+#          command: |
+#            set -x
+#            docker-compose up -d
+#            docker exec potepanec_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
+#      - run:
+#          name: Setup database
+#          command: |
+#            docker-compose exec potepanec bash -c 'yes n | bundle exec rails g spree:install --migrate --seed --sample --auto_accept'
+#      - run:
+#          name: Run rspec
+#          command: docker-compose exec potepanec rspec
 
   rubocop:
     working_directory: ~/potepanec
@@ -49,12 +49,35 @@ jobs:
             - vendor/bundle
 
   aws_deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: circleci/python:3.6-jessie
+    working_directory: ~/
     steps:
+      - run: sudo pip install awscli
       - run:
-          name: Deploy for AWS with SSH
-          command: ssh ${USER_NAME}@${HOST_NAME} 'cd /var/www/rails/potepanec && git pull && rails db:migrate RAILS_ENV=production'
+          name: authorize-security-group-ingress
+          command: |
+            IP=`curl -s ifconfig.me`
+            echo "#!/bin/bash" > ./sg.sh
+            echo "aws configure set region ap-northeast-1" >> ./sg.sh
+            echo "aws ec2 authorize-security-group-ingress --group-id ${SEQURE_GROUP_ID} --protocol tcp --port 22 --cidr ${IP}/32" >> ./sg.sh
+            bash ./sg.sh
+      - run:
+          name: Run git pull
+          command: ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} "cd /var/www/rails/potepanec &&  git fetch origin ${CIRCLE_BRANCH} && git reset --hard origin/${CIRCLE_BRANCH}"
+      - run:
+          name: Run bundle install and migration
+          command: |
+            export BASH_ENV='~/.bash_profile'
+            ssh -oStrictHostKeyChecking=no $USER_NAME@$HOST_NAME "cd /var/www/rails/potepanec && ~/.rbenv/shims/bundle install && ~/.rbenv/shims/rails db:migrate RAILS_ENV=production"
+      - run:
+          name: revoke-security-group-ingress
+          command: |
+            IP=`curl -s ifconfig.me`
+            echo "#!/bin/bash" > ./sg.sh
+            echo "aws configure set region ap-northeast-1" >> ./sg.sh
+            echo "aws ec2 revoke-security-group-ingress --group-id ${SEQURE_GROUP_ID} --protocol tcp --port 22 --cidr ${IP}/32" >> ./sg.sh
+            bash ./sg.sh
 
 orbs:
   build-tools: circleci/build-tools@2.6.3
@@ -64,9 +87,9 @@ workflows:
   version: 2.1
   test_and_deploy:
     jobs:
-      - rspec
+#      - rspec
       - rubocop
       - aws_deploy:
           requires:
-            - rspec
+#            - rspec
             - rubocop
