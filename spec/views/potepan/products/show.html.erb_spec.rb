@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "products/show.html.erb", type: :view do
-
-  it "正常なビューを返す" do
+  it '正常なビューを返す' do
     product = FactoryBot.create(:spree_product)
     visit "/potepan/products/#{product.id}"
 
