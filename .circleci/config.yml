@@ -50,29 +50,19 @@ jobs:
 
   aws_deploy:
     machine:
-      image: circleci/classic:edge
+      enabled: true
     steps:
-      - checkout
-      - add_ssh_keys:
       - run:
-          name: SSH Connecting for EC2
-          command: ssh ${USER_NAME}@${HOST_NAME}
-      - run:
-          name: cd app_dir
-          command: cd /var/www/rails/potepanec
-      - run:
-          name: Run git pull
-          command: git pull
-      - run:
-          name: Run migration
-          command: rails db:migrate RAILS_ENV=production
+          name: Deploy for AWS with SSH
+          command: ssh ${USER_NAME}@${HOST_NAME} 'cd /var/www/rails/potepanec && git pull && rails db:migrate RAILS_ENV=production'
 
 orbs:
   build-tools: circleci/build-tools@2.6.3
   jq: circleci/jq@1.9.1
+
 workflows:
   version: 2.1
-  build:
+  test_and_deploy:
     jobs:
       - rspec
       - rubocop
