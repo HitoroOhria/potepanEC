@@ -5,7 +5,8 @@ RSpec.describe Potepan::ProductsController, type: :controller do
 
   it '#show' do
     get :show, params: { id: product.id }
+    expect(response).to render_template :show
+    expect(assigns(:product)).to eq product
     expect(response).to be_success
-    expect(response).to have_http_status 200
   end
 end
