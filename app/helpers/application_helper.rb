@@ -1,8 +1,8 @@
 module ApplicationHelper
   def full_title(page_title)
     base_title = 'BIGBAG store'
-    if page_title
-      page_title + ' | ' + base_title
+    if page_title.present?
+      page_title.to_s + ' | ' + base_title
     else
       base_title
     end

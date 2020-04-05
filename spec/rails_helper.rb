@@ -61,4 +61,7 @@ RSpec.configure do |config|
 
   # use Capybara DSL
   config.include Capybara::DSL
+
+  # use ApplicationHelper
+  config.include ApplicationHelper
 end

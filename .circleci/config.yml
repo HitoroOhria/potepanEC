@@ -1,29 +1,29 @@
 version: 2.1
 jobs:
-#  rspec:
-#    working_directory: ~/potepanec
-#    docker:
-#      - image: circleci/ruby
-#    steps:
-#      - checkout
-#      - setup_remote_docker
-#      - run:
-#          name: Setup environment variable
-#          command: |
-#            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
-#      - run:
-#          name: Start containers and verify it is working
-#          command: |
-#            set -x
-#            docker-compose up -d
-#            docker exec potepanec_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
-#      - run:
-#          name: Setup database
-#          command: |
-#            docker-compose exec potepanec bash -c 'yes n | bundle exec rails g spree:install --migrate --seed --sample --auto_accept'
-#      - run:
-#          name: Run rspec
-#          command: docker-compose exec potepanec rspec
+  rspec:
+    working_directory: ~/potepanec
+    docker:
+      - image: circleci/ruby
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Setup environment variable
+          command: |
+            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
+      - run:
+          name: Start containers and verify it is working
+          command: |
+            set -x
+            docker-compose up -d
+            docker exec potepanec_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
+      - run:
+          name: Setup database
+          command: |
+            docker-compose exec potepanec bash -c 'yes n | bundle exec rails g spree:install --migrate --seed --sample --auto_accept'
+      - run:
+          name: Run rspec
+          command: docker-compose exec potepanec rspec
 
   rubocop:
     working_directory: ~/potepanec
@@ -69,7 +69,7 @@ jobs:
           name: Run bundle install and migration
           command: |
             export BASH_ENV='~/.bash_profile'
-            ssh -oStrictHostKeyChecking=no $USER_NAME@$HOST_NAME "cd /var/www/rails/potepanec && ~/.rbenv/shims/bundle install && ~/.rbenv/shims/rails db:migrate RAILS_ENV=production"
+            ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} "cd /var/www/rails/potepanec && ~/.rbenv/shims/bundle install && ~/.rbenv/shims/rails db:migrate RAILS_ENV=production"
       - run:
           name: revoke-security-group-ingress
           command: |
@@ -87,9 +87,9 @@ workflows:
   version: 2.1
   test_and_deploy:
     jobs:
-#      - rspec
+      - rspec
       - rubocop
       - aws_deploy:
           requires:
-#            - rspec
+            - rspec
             - rubocop
