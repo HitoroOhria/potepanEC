@@ -1,0 +1,37 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
+    - 'Gemfile'
+    - 'spec/rails_helper.rb'
+
+Layout/LineLength:
+  Max: 102
+
+Lint/NonDeterministicRequireOrder:
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+Style/EmptyMethod:
+  Exclude:
+    - 'app/controllers/**/*'
+
+Style/StringLiterals:
+  Exclude:
+    - 'spec/**/**/*'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

@@ -1,0 +1,18 @@
+<% provide(:title, @product.name) %>
+
+<%= render 'light_section', product: @product %>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix">
+  <div class="container">
+    <div class="row singleProduct">
+      <div class="col-xs-12">
+        <div class="media">
+          <%= render 'media_left' %>
+          <%= render 'media_body', product: @product %>
+        </div>
+      </div>
+    </div>
+    <%= render 'product_content' %>
+  </div>
+</section>

@@ -51,6 +51,9 @@ test:
 #
 production:
   <<: *default
-  database: potepanec_2_7_production
-  username: potepanec
-  password: <%= ENV['POTEPANEC_DATABASE_PASSWORD'] %>
+  database: potepanec_db
+  username: <%= ENV['POTEPANEC_DATABASE_USER']%>
+  password: foobar
+  socket:   /var/lib/mysql/mysql.sock 
+  host:     potepanec-web.cxz8cbm3fpx0.ap-northeast-1.rds.amazonaws.com
+  port:     <%= ENV['POTEPANEC_DATABASE_PORT'] %>

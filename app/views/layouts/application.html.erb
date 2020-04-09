@@ -1,14 +1,25 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
   <head>
-    <title>Potepanec</title>
+    <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= render 'layouts/meta_tags' %>
+    <%= render 'layouts/include_stylesheet_and_javascript' %>
+    <%= render 'layouts/correspondence_ie9' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="main-wrapper">
+      <%= render 'shared/header' %>
+      <%= render 'shared/navbar' %>
+      <%= yield %>
+      <%= render 'shared/footer' %>
+    </div>
+    <%= debug(params) if Rails.env.development? %>
   </body>
+
+  <%= render 'shared/login_modal' %>
+  <%= render 'shared/sign_up_modal' %>
 </html>
