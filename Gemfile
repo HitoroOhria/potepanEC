@@ -35,7 +35,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'faker'
-gem 'solidus', '~> 2.9.0'
+gem 'rmagick'
+gem 'paperclip'
+gem 'aws-sdk'
+gem 'solidus',    '~> 2.9.0'
 gem 'solidus_auth_devise'
 gem 'solidus_i18n', github: 'solidusio-contrib/solidus_i18n', branch: 'master'
 
