@@ -62,6 +62,7 @@ RSpec.configure do |config|
   # use Capybara DSL
   config.include Capybara::DSL
 
-  # use ApplicationHelper
+  # use Helpers
   config.include ApplicationHelper
+  config.include Potepan::CategoriesHelper
 end

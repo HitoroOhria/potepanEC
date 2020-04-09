@@ -9,6 +9,10 @@
 /.rakeTasks 
 /.generators
 
+# Ignore Rails ERD
+/erd.pdf
+lib/tasks/auto_generate_diagram.rake
+
 # Ignore bundler config.
 /.bundle
 
