@@ -7,7 +7,7 @@ class Potepan::CategoriesController < ApplicationController
         @products.append(taxon.products)
       end
     else
-      @products = @category.products
+      @products = @taxon.products
     end
   end
 
