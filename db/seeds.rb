@@ -1,6 +1,3 @@
-Spree::Core::Engine.load_seed if defined?(Spree::Core)
-Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-
 # Taxonomyを作成する
 solidus = Spree::Taxonomy.create!(name: 'Solidus')
 aws = Spree::Taxonomy.create!(name: 'AWS')
@@ -41,3 +38,6 @@ Spree::Taxon.all.each do |taxon|
     end
   end
 end
+
+Spree::Core::Engine.load_seed if defined?(Spree::Core)
+Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
