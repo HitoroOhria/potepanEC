@@ -1,12 +1,15 @@
+Spree::Core::Engine.load_seed if defined?(Spree::Core)
+Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+
 # Taxonomyを作成する
-categories = Spree::Taxonomy.create!(name: 'Categories')
-brand = Spree::Taxonomy.create!(name: 'Brand')
+solidus = Spree::Taxonomy.create!(name: 'Solidus')
+aws = Spree::Taxonomy.create!(name: 'AWS')
 
 # Taxonを作成する
-categories_taxons = [ 'Bags', 'Mags', 'Shirts', 'T-Shirts' ]
-categories_taxons.each { |taxon| categories.taxons.create!(name: taxon) }
-brand_taxons = [ 'Ruby', 'Nginx', 'Rials', 'Unicorn' ]
-brand_taxons.each { |taxon| brand.taxons.create!(name: taxon) }
+solidus_taxons = [ 'Product', 'Valiant', 'Price', 'Image' ]
+solidus_taxons.each { |taxon| solidus.taxons.create!(name: taxon) }
+aws_taxons = [ 'EC2', 'RDS', 'Cloud9', 'S3' ]
+aws_taxons.each { |taxon| aws.taxons.create!(name: taxon) }
 
 # OptionTypeとOptionValueを作成する
 color = Spree::OptionType.create!(name: 'color',   presentation: 'color variant' )
