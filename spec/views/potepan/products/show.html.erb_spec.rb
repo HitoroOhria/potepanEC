@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "products/show.html.erb", type: :view do
-  let(:product) { FactoryBot.create(:spree_product) }
+  let(:product) { create(:variant).product }
   before do
+    product.taxons.create(attributes_for(:taxon))
     visit potepan_product_path(product.id)
   end
 

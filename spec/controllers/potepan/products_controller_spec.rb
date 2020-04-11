@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Potepan::ProductsController, type: :controller do
-  let(:product) { FactoryBot.create(:spree_product) }
+  let(:product) { create(:product) }
   before do
     get :show, params: { id: product.id }
   end
