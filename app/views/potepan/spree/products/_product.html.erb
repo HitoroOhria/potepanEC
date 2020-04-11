@@ -4,9 +4,9 @@
       <%= link_to image_tag(product.display_image.url(:product), :alt => "products-img"), potepan_product_path(product.id) %>
     </div>
     <div class="productCaption clearfix">
-      <a href="single_product.html">
+      <%= link_to potepan_product_path(product.id) do %>
         <h5><%= product.name %></h5>
-      </a>
+      <% end %>
       <h3><%= product.price.round %>円</h3>
     </div>
   </div>

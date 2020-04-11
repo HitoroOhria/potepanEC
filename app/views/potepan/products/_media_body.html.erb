@@ -24,6 +24,8 @@
     </select>
   </span>
   <div class="btn-area">
-    <a href="cart_page.html" class="btn btn-primary btn-block">カートへ入れる<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+    <%= link_to potepan_cart_page_path, class: 'btn btn-primary btn-block' do %>
+      カートへ入れる<i class="fa fa-angle-right" aria-hidden="true"></i>
+    <% end %>
   </div>
 </div>

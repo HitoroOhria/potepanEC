@@ -1,4 +1,3 @@
-<!--<li><a href=<%#= potepan_category_path(taxon.id) %>><i class="fa fa-caret-right" aria-hidden="true"></i><%#= taxon.name %> <span>(<%#= taxon.products.count %>)</span></a></li>-->
 <%= link_to potepan_category_path(taxon.id) do %>
   <i class="fa fa-caret-right" aria-hidden="true"></i><%= taxon.name %> <span>(<%= taxon.products.count %>)</span>
 <% end %>
