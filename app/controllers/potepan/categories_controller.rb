@@ -14,6 +14,6 @@ class Potepan::CategoriesController < ApplicationController
   private
 
     def taxon_id_is_taxonomy?
-      params[:id].to_i <= Spree::Taxonomy.count
+      Spree::Taxonomy.find_by(name: @taxon.name)
     end
 end
