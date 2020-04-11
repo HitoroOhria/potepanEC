@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Potepan::ProductsController, type: :controller do
-  let(:product) { create(:product) }
+  let(:product) { create(:variant).product }
   before do
-    get :show, params: { id: product.id }
+    product.taxons.create(attributes_for(:taxon))
+    get :show, params: {id: product.id}
   end
 
   describe '#show' do

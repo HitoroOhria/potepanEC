@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "helpers/application_helper.rb", type: :view do
+RSpec.describe "helpers/application_helper.rb", type: :helper do
   describe 'full_title(page_title)' do
     it "文字列を引数に取ると、ベースタイトルと結合した文字列を返す" do
       expect(full_title('bags')).to eq 'bags | BIGBAG store'
