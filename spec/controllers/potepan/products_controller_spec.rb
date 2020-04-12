@@ -4,11 +4,11 @@ RSpec.describe Potepan::ProductsController, type: :controller do
   let(:product) { create(:variant).product }
   before do
     product.taxons.create(attributes_for(:taxon))
-    get :show, params: {id: product.id}
+    get :show, params: {product_id: product.id}
   end
 
   describe '#show' do
-    it '@product変数は、id属性がparams[:id]に対応したSpree::Productモデルオブジェクトである' do
+    it '@product変数は、id属性がparams[:product_id]に対応したSpree::Productモデルオブジェクトである' do
       expect(assigns(:product)).to eq Spree::Product.find(product.id)
     end
 

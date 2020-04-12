@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "potepan/categories/show.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'GET potepan/categories/:taxon_id' do
+    context '静的レイアウト' do
+
+    end
+
+  end
 end

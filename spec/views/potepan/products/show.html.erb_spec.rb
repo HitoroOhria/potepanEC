@@ -7,7 +7,7 @@ RSpec.describe "products/show.html.erb", type: :view do
     visit potepan_product_path(product.id)
   end
 
-  describe 'products/show.html.erbを表示' do
+  describe 'GET potepan/products/:product_id' do
     it 'titleがfull_title(@product.name)と一致する' do
       expect(page.title).to eq full_title(product.name)
     end
