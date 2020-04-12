@@ -1,10 +1,10 @@
 class Potepan::CategoriesController < ApplicationController
   def show
-    @taxon = Spree::Taxon.find(params[:id])
+    @taxon = Spree::Taxon.find(params[:taxon_id])
     if taxon_id_is_taxonomy?
-      @products = Spree::Taxon.products.first
+      @products = Spree::Taxon.new.products
       @taxon.taxonomy.taxons.each do |taxon|
-        @products.append(taxon.products)
+        @products.push(taxon.products)
       end
     else
       @products = @taxon.products
