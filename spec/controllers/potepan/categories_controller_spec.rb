@@ -30,7 +30,7 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
           expect(response).to have_http_status(200)
         end
 
-        it 'レスポンスののテンプレートがcategories/show.html.erbである' do
+        it 'レスポンスのテンプレートがcategories/show.html.erbである' do
           expect(response).to render_template :show
         end
       end
