@@ -94,7 +94,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  config.before(:suite) do
-    DatabaseCleaner.clean
-  end
 end
