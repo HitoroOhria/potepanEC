@@ -4,7 +4,7 @@ RSpec.describe Potepan::ProductsController, type: :controller do
   let(:product) { create(:variant).product }
   before do
     product.taxons.create(attributes_for(:taxon))
-    get :show, params: {product_id: product.id}
+    get :show, params: { product_id: product.id }
   end
 
   describe '#show' do

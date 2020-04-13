@@ -25,10 +25,10 @@ size.option_values.create!(name: 'XL',   presentation: 'デカイラージ')
 Spree::Taxon.all.each do |taxon|
   rand(1..5).times do
     product = taxon.products.create!(name: Faker::Food.fruits,
-                          slug: Faker::Lorem.words(number: 4),
-                          price: rand(1..2000),
-                          description: Faker::Lorem.sentence,
-                          shipping_category_id: 1)
+                                     slug: Faker::Lorem.words(number: 4),
+                                     price: rand(1..2000),
+                                     description: Faker::Lorem.sentence,
+                                     shipping_category_id: 1)
     rand(1..3).times do
       product.variants.create!(weight: rand(1..500) , height: rand(1..500), width: rand(1..500), depth: rand(1..500))
       product.variants.each do |variant|
