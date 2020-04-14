@@ -69,7 +69,7 @@ jobs:
           name: Run bundle install and migration
           command: |
             export BASH_ENV='~/.bash_profile'
-            ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} "cd /var/www/rails/potepanec && ~/.rbenv/shims/bundle install --without=development test && ~/.rbenv/shims/rails db:migrate RAILS_ENV=production"
+            ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} "cd /var/www/rails/potepanec && ~/.rbenv/shims/bundle install --without=development test && ~/.rbenv/shims/rails db:migrate RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
       - run:
           name: revoke-security-group-ingress
           command: |
