@@ -1,5 +1,8 @@
 <li>
-  <a href="javascript:;" data-toggle="collapse" data-target=<%= "#" + taxonomy.name %> ><%= taxonomy.name %><i class="fa fa-plus"></i></a>
+  <%= link_to 'javascript:;', data: { toggle: 'collapse', target: "##{taxonomy.name}" } do %>
+    <%= taxonomy.name %><i class="fa fa-plus"></i>
+  <% end %>
+<!--  <a href="javascript:;" data-toggle="collapse" data-target=<%#= "#" + taxonomy.name %> ><%#= taxonomy.name %><i class="fa fa-plus"></i></a>-->
   <ul id=<%= taxonomy.name %> class="collapse collapseItem">
     <%= render taxonomy.taxons[1..taxonomy.taxons.count] %>
   </ul>
