@@ -69,7 +69,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
           products_count = taxonomy.taxons.each { |taxon| products.push(taxon.products) } .count
           should have_css('.productBox', count: products_count)
         }
-        it { should have_link(product.name), href: potepan_product_path(product.id) }
+        it { should have_link(product.name, href: potepan_product_path(product.id)) }
         it { should have_css('h3', text: "#{product.price.round}円") }
       end
 
@@ -77,7 +77,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         let(:taxon_product) { taxon.products.first }
 
         it { should have_css('.productBox', count: taxon.products.count) }
-        it { should have_link(taxon_product.name), href: potepan_product_path(taxon_product.id) }
+        it { should have_link(taxon_product.name, href: potepan_product_path(taxon_product.id)) }
         it { should have_css('h3', text: "#{taxon_product.price.round}円") }
       end
     end
