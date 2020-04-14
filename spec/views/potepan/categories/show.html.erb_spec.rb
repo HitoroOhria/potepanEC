@@ -9,7 +9,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
     # OptionType(color) <-> OptionValue1, OptionType(size) <-> OptionValue2
     # Product2 <-> Variant2 <-> OptionValue1
     #
-    # インスタンス変数と格納されているファクトリー
+    # メソッドと格納されているファクトリー
     # taxonomy = Taxonomy
     # taxon = Taxon1
     # product = product2
