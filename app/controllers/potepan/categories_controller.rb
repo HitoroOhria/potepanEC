@@ -1,7 +1,7 @@
 class Potepan::CategoriesController < ApplicationController
   def show
     @taxon = Spree::Taxon.find(params[:taxon_id])
-    if taxon_id_is_taxonomy?
+    if @taxon.taxonomy.present?
       @products = Spree::Taxon.new.products
       @taxon.taxonomy.taxons.each do |taxon|
         @products.push(taxon.products)
@@ -10,10 +10,4 @@ class Potepan::CategoriesController < ApplicationController
       @products = @taxon.products
     end
   end
-
-  private
-
-    def taxon_id_is_taxonomy?
-      Spree::Taxonomy.find_by(name: @taxon.name)
-    end
 end
