@@ -69,7 +69,7 @@ RSpec.configure do |config|
   # use Helpers
   config.include ApplicationHelper
   config.include Potepan::CategoriesHelper
-
+  config.include Potepan::ProductsHelper
 
   # Setting Database-Clener
   config.before(:suite) do
