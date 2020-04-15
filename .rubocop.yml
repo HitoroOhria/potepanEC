@@ -45,9 +45,3 @@ Style/FrozenStringLiteralComment:
 
 Style/AsciiComments:
   Enabled: false
-
-Layout/IndentationConsistency:
-  Enabled: false
-
-Layout/IndentationWidth:
-  Enabled: false
