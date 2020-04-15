@@ -2,21 +2,25 @@ require 'rails_helper'
 
 RSpec.describe "potepan/categories/show.html.erb", type: :view do
   feature 'GET potepan/categories/:taxon_id' do
-    let(:taxonomy) { create(:taxonomy) }
-    let(:taxon1)   { taxonomy.taxons.create(attributes_for(:taxon)) }
-    let(:taxon2)   { taxonomy.taxons.create(attributes_for(:taxon)) }
+    let(:taxonomy)  { create(:taxonomy) }
+    let(:taxon1)    { taxonomy.taxons.create(attributes_for(:taxon)) }
+    let(:taxon2)    { taxonomy.taxons.create(attributes_for(:taxon)) }
     let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
     let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
     let!(:option_type_size)   { create(:option_type, name: 'size') }
     let!(:option_type_color)  { create(:option_type, name: 'color') }
-    let!(:color_option_value) { create(:option_value, option_type: option_type_color) }
     let!(:size_option_value)  { create(:option_value, option_type: option_type_size) }
+    let!(:color_option_value) { create(:option_value, option_type: option_type_color) }
 
     before do
       visit potepan_category_path(taxon1.id)
     end
 
     subject { page }
+
+    context 'ページタイトル' do
+      it { should have_title full_title(taxon1.name) }
+    end
 
     context 'カテゴリーパネル' do
       context '商品カテゴリー' do
@@ -44,6 +48,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         let(:taxonomy_products_count) {
           taxonomy.taxons.inject(0) { |product_counter, taxon| product_counter + taxon.products.count }
         }
+
         before do
           visit potepan_category_path(Spree::Taxon.find_by(name: taxonomy.name).id)
         end
