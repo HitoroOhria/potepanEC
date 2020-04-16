@@ -3,7 +3,7 @@ class Potepan::CategoriesController < ApplicationController
     @taxon = Spree::Taxon.find(params[:taxon_id])
     if taxon_id_is_taxonomy?
       @products = Spree::Taxon.new.products
-      Spree::Taxon.eager_load(:products).where(taxonomy_id: @taxon.taxonomy.id).each do |taxon|
+      Spree::Taxon.includes(:products).where(taxonomy_id: @taxon.taxonomy.id).each do |taxon|
         @products.push(taxon.products)
       end
     else
