@@ -18,12 +18,12 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
 
     subject { page }
 
-    context 'ページタイトル' do
+    context 'ページタイトルは、' do
       it { should have_title full_title(taxon1.name) }
     end
 
-    context 'カテゴリーパネル' do
-      context '商品カテゴリー' do
+    context 'カテゴリーパネルの' do
+      context '「商品カテゴリー」は、' do
         it { should have_css('.panel-heading', text: '商品カテゴリー') }
         it { should have_css('a',              text: taxon1.taxonomy.name, visible: false) }
         it {
@@ -32,19 +32,19 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         }
       end
 
-      context '色から探す' do
+      context '「色から探す」は、' do
         it { should have_css('.panel-heading',  text: '色から探す') }
         it { should have_css('a',               text: color_option_value.name) }
       end
 
-      context 'サイズから探す' do
+      context '「サイズから探す」は、' do
         it { should have_css('.panel-heading',  text: 'サイズから探す') }
         it { should have_css('a',               text: size_option_value.name) }
       end
     end
 
-    context 'プロダクト一覧' do
-      context ':taxon_idがTaxonomyの場合' do
+    context 'プロダクト一覧表示部分は、' do
+      context ':taxon_idがTaxonomyの場合、' do
         let(:taxonomy_products_count) {
           taxonomy.taxons.inject(0) { |product_counter, taxon| product_counter + taxon.products.count }
         }
@@ -64,7 +64,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         }
       end
 
-      context ':taxon_idがTaxonの場合' do
+      context ':taxon_idがTaxonの場合、' do
         it { should have_css('.productBox', count: taxon1.products.count) }
         it { should have_link(product1.name, href: potepan_product_path(product1.id)) }
         it { should have_css('h3', text: "#{product1.price.round}円") }
