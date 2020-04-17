@@ -35,8 +35,13 @@ services:
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: password
-      MYSQL_HOST: mysql
-      REDIS_URL: "redis://redis:6379"
+      MYSQL_HOST:     mysql
+      REDIS_URL:      "redis://redis:6379"
+      AWS_S3_BUCKET_NAME:       $AWS_S3_BUCKET_NAME
+      AWS_S3_HOST_NAME:         $AWS_S3_HOST_NAME
+      AWS_S3_REGION:            $AWS_S3_REGION
+      AWS_S3_ACCESS_KEY:        $AWS_S3_ACCESS_KEY
+      AWS_S3_SECRET_ACCESS_KEY: $AWS_S3_SECRET_ACCESS_KEY
     depends_on:
       - mysql
       - redis
