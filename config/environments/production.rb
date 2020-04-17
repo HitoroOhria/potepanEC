@@ -99,9 +99,12 @@ Rails.application.configure do
     bucket:       ENV['AWS_S3_BUCKET_NAME'],
     s3_host_name: ENV['S3_HOST_NAME'],
     s3_credentials: {
-      s3_region:         ENV['AWS_S3_REGION'],
+      s3_region:         'ap-northeast-1',
       access_key_id:     ENV['AWS_S3_ACCESS_KEY'],
       secret_access_key: ENV['AWS_S3_SECRET_ACCESS_KEY']
     }
   }
+
+  # master-key config
+  config.require_master_key = true
 end
