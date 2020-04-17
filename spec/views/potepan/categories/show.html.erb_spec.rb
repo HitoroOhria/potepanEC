@@ -7,8 +7,8 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
     let(:taxon2)    { taxonomy.taxons.create(attributes_for(:taxon)) }
     let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
     let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
-    let!(:option_type_size)   { create(:option_type, name: 'size') }
-    let!(:option_type_color)  { create(:option_type, name: 'color') }
+    let!(:option_type_size)   { create(:option_type, name: 'tshirt-size') }
+    let!(:option_type_color)  { create(:option_type, name: 'tshirt-color') }
     let!(:size_option_value)  { create(:option_value, option_type: option_type_size) }
     let!(:color_option_value) { create(:option_value, option_type: option_type_color) }
 

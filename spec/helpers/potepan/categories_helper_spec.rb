@@ -8,7 +8,7 @@ RSpec.describe "helpers/potepan/categories_helper.rb", type: :helper do
 
   describe 'take_option_values(option_type_name)' do
     it '引数にSpree::OptionTypeのname属性をStringで渡すと、該当するSpree::OptionTypteモデルの.option_valuesを返す' do
-      expect(take_option_values(option_type.name)).to eq option_type.option_values
+      expect(option_values(option_type.name)).to eq option_type.option_values
     end
   end
 end
