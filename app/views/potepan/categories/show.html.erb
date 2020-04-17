@@ -7,8 +7,8 @@
     <div class="row">
       <div class="col-md-3 col-sm-4 col-xs-12 sideBar">
         <%= render 'panel_nest', panel_name: '商品カテゴリー', panel_items: Spree::Taxonomy.all %>
-        <%= render 'panel',      panel_name: '色から探す',     panel_items: Spree::OptionType.second.option_values%>
-        <%= render 'panel',      panel_name: 'サイズから探す',  panel_items: Spree::OptionType.first.option_values %>
+        <%= render 'panel',      panel_name: '色から探す',     panel_items: option_values('tshirt-color') %>
+        <%= render 'panel',      panel_name: 'サイズから探す',  panel_items: option_values('tshirt-size') %>
       </div>
       <div class="col-md-9 col-sm-8 col-xs-12">
         <%= render 'filter_area' %>
