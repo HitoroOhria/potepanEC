@@ -71,17 +71,17 @@ RSpec.configure do |config|
   config.include Potepan::CategoriesHelper
   config.include Potepan::ProductsHelper
 
-  # Setting Database-Clener
+  # Setting Database-Cleaner
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:transaction)
   end
 
-  config.before(:each) do
+  config.before(:all) do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after(:all) do
     DatabaseCleaner.clean
   end
 end
