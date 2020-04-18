@@ -28,6 +28,7 @@ gem 'solidus_i18n', github: 'solidusio-contrib/solidus_i18n', branch: 'master'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
   gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'pry-doc'
