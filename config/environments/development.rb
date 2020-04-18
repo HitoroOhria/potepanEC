@@ -69,7 +69,7 @@ Rails.application.configure do
   Paperclip.options[:command_path] = "/usr/local/bin/"
   config.paperclip_defaults = {
     storage:      :s3,
-    bucket:       ENV['AWS_S3_BUCKET_NAME'],
+    bucket:       'stylishcoffee-development',
     s3_host_name: 's3-ap-northeast-1.amazonaws.com',
     s3_credentials: {
       s3_region:         ENV['AWS_S3_REGION'],
