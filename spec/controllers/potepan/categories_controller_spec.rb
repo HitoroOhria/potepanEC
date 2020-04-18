@@ -8,29 +8,25 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
     let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
     let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
 
-    context ':taxon_idがTaxonomyの場合、' do
+    context ':taxon_idがTaxonomyの場合' do
       before do
         get :show, params: { taxon_id: taxon1.id }
       end
 
-      context 'インスタンス変数である' do
-        it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonomyモデルオブジェクトである' do
-          expect(assigns(:taxon)).to eq taxon1
-        end
-
-        it '@productsは、@taxon変数に関連するSpree::Taxonomyモデルの、関連する全てのSpree::Productモデルのコレクションである' do
-          expect(assigns(:products)).to eq taxon1.products.push(taxon2.products)
-        end
+      it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonomyモデルオブジェクトである' do
+        expect(assigns(:taxon)).to eq taxon1
       end
 
-      context 'レスポンスの' do
-        it 'HTTPステータスコードが200である' do
-          expect(response).to have_http_status(200)
-        end
+      it '@productsは、@taxon変数に関連するSpree::Taxonomyモデルの、関連する全てのSpree::Productモデルのコレクションである' do
+        expect(assigns(:products)).to eq taxon1.products.push(taxon2.products)
+      end
 
-        it 'テンプレートがcategories/show.html.erbである' do
-          expect(response).to render_template :show
-        end
+      it 'HTTPレスポンスステータスコードが200である' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'レスポンステンプレートがcategories/show.html.erbである' do
+        expect(response).to render_template :show
       end
     end
 
@@ -39,24 +35,20 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
         get :show, params: { taxon_id: taxon2.id }
       end
 
-      context 'インスタンス変数である' do
-        it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonモデルオブジェクトである' do
-          expect(assigns(:taxon)).to eq taxon2
-        end
-
-        it '@productsは、@taxon変数に関連する全てのSpree::Productモデルのコレクションである' do
-          expect(assigns(:products)).to eq taxon2.products
-        end
+      it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonモデルオブジェクトである' do
+        expect(assigns(:taxon)).to eq taxon2
       end
 
-      context 'レスポンスの' do
-        it 'HTTPステータスコードが200である' do
-          expect(response).to have_http_status(200)
-        end
+      it '@productsは、@taxon変数に関連する全てのSpree::Productモデルのコレクションである' do
+        expect(assigns(:products)).to eq taxon2.products
+      end
 
-        it 'テンプレートがcategories/show.html.erbである' do
-          expect(response).to render_template :show
-        end
+      it 'HTTPレスポンスステータスコードが200である' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'レスポンステンプレートがcategories/show.html.erbである' do
+        expect(response).to render_template :show
       end
     end
   end

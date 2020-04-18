@@ -1,50 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe "potepan/categories/show.html.erb", type: :view do
+  let(:taxonomy)  { create(:taxonomy) }
+  let(:taxon1)    { taxonomy.root }
+  let(:taxon2)    { taxon1.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id)) }
+  let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
+  let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
+  let!(:option_type_size)   { create(:option_type,  name: 'tshirt-size') }
+  let!(:option_type_color)  { create(:option_type,  name: 'tshirt-color') }
+  let!(:size_option_value)  { create(:option_value, option_type: option_type_size) }
+  let!(:color_option_value) { create(:option_value, option_type: option_type_color) }
+
+  before do
+    visit potepan_category_path(taxon1.id)
+  end
+
+  subject { page }
+
   feature 'GET potepan/categories/:taxon_id' do
-    let(:taxonomy)  { create(:taxonomy) }
-    let(:taxon1)    { taxonomy.root }
-    let(:taxon2)    { taxon1.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id)) }
-    let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
-    let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
-    let!(:option_type_size)   { create(:option_type,  name: 'tshirt-size') }
-    let!(:option_type_color)  { create(:option_type,  name: 'tshirt-color') }
-    let!(:size_option_value)  { create(:option_value, option_type: option_type_size) }
-    let!(:color_option_value) { create(:option_value, option_type: option_type_color) }
+    it { should have_title full_title(taxon1.name) }
 
-    before do
-      visit potepan_category_path(taxon1.id)
+    context 'カテゴリーパネルの「商品カテゴリー」のレイアウトは、' do
+      it { should have_css('.panel-heading', text: '商品カテゴリー') }
+      it { should have_css('a',              text: taxon1.taxonomy.name, visible: false) }
+      it {
+        should have_css('a', text: taxon1.name, visible: false)
+        should have_css('a', text: taxon2.name, visible: false)
+      }
     end
 
-    subject { page }
-
-    context 'ページタイトルは、' do
-      it { should have_title full_title(taxon1.name) }
+    context 'カテゴリーパネルの「色から探す」のレイアウトは' do
+      it { should have_css('.panel-heading',  text: '色から探す') }
+      it { should have_css('a',               text: color_option_value.name) }
     end
 
-    context 'カテゴリーパネルの' do
-      context '「商品カテゴリー」は、' do
-        it { should have_css('.panel-heading', text: '商品カテゴリー') }
-        it { should have_css('a',              text: taxon1.taxonomy.name, visible: false) }
-        it {
-          should have_css('a', text: taxon1.name, visible: false)
-          should have_css('a', text: taxon2.name, visible: false)
-        }
-      end
-
-      context '「色から探す」は、' do
-        it { should have_css('.panel-heading',  text: '色から探す') }
-        it { should have_css('a',               text: color_option_value.name) }
-      end
-
-      context '「サイズから探す」は、' do
-        it { should have_css('.panel-heading',  text: 'サイズから探す') }
-        it { should have_css('a',               text: size_option_value.name) }
-      end
+    context 'カテゴリーパネルの「サイズから探す」のレイアウトは' do
+      it { should have_css('.panel-heading',  text: 'サイズから探す') }
+      it { should have_css('a',               text: size_option_value.name) }
     end
 
-    context 'プロダクト一覧表示部分は、' do
-      context ':taxon_idがTaxonomyの場合、' do
+    context 'プロダクト一覧表示のレイアウトは' do
+      context 'ルーティングの:taxon_idのモデルオブジェクトが親ノードの時' do
         let(:taxonomy_products_count) {
           taxonomy.taxons.inject(0) { |product_counter, taxon| product_counter + taxon.products.count }
         }
@@ -60,7 +56,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         }
       end
 
-      context ':taxon_idがTaxonの場合、' do
+      context 'ルーティングの:taxon_idのモデルオブジェクトが葉ノードの時' do
         before do
           visit potepan_category_path(taxon2.id)
         end
