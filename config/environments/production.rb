@@ -99,7 +99,7 @@ Rails.application.configure do
     bucket:       'stylishcoffee-production',
     s3_host_name: 's3-ap-northeast-1.amazonaws.com',
     s3_credentials: {
-      s3_region:         'ap-northeast-1',
+      s3_region:         ENV['AWS_S3_REGION'],
       access_key_id:     ENV['AWS_S3_ACCESS_KEY'],
       secret_access_key: ENV['AWS_S3_SECRET_ACCESS_KEY']
     }
