@@ -23,5 +23,39 @@ RSpec.describe "products/show.html.erb", type: :view do
     it 'bodyに@productのdescription属性が表示されている' do
       expect(page).to have_content product.description
     end
+
+    context '商品の所属するカテゴリーが1つの時'do
+      context 'そのカテゴリーに所属する商品の個数が4個未満の場合' do
+        it '関連商品に、そのカテゴリーに所属する商品を全て表示する' do
+
+        end
+      end
+
+      context 'そのカテゴリーに所属する商品の個数が5個以上の場合' do
+        it '関連商品に、そのカテゴリーに所属する商品を4個まで表示する' do
+
+        end
+      end
+    end
+
+    context '商品の所属するカテゴリーが2つの時'do
+      context '２つのカテゴリーに所属する商品の合計個数が4個未満の場合' do
+        it '関連商品に、2つのカテゴリーに所属する商品を全て表示する' do
+
+        end
+      end
+
+      context '2つのカテゴリーの商品の合計個数が5個以上の場合' do
+        it '関連商品に、2つのカテゴリーに所属する商品を4個まで表示する' do
+
+        end
+      end
+    end
+
+    context '商品の所属するカテゴリーが2つで、2つ目のカテゴリーが子カテゴリーを一つ持つ(ネストされている)時'do
+      it '関連商品は、子カテゴリーの商品も含め、上限4個まで商品を表示する' do
+
+      end
+    end
   end
 end
