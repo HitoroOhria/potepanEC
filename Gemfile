@@ -40,6 +40,7 @@ group :development, :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'rails-controller-testing'
+  gem 'bullet'
 end
 
 group :development do

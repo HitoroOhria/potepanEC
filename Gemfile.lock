@@ -95,6 +95,9 @@ GEM
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
+    bullet (6.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.1.1)
     cancancan (2.3.0)
     canonical-rails (0.2.8)
@@ -447,6 +450,7 @@ GEM
     unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
+    uniform_notifier (1.13.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -473,6 +477,7 @@ DEPENDENCIES
   aws-sdk (< 3.0)
   aws-sdk-s3
   bootsnap
+  bullet
   byebug
   capybara
   coffee-rails (~> 4.2)
