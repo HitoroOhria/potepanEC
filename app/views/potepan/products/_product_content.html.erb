@@ -7,12 +7,13 @@
   <% products = Spree::Taxon.new.products
      Spree::Taxon.includes(:products)
                  .where(name: product.taxons.flat_map { |taxon|
-                              taxon.leaf? ? taxon.name : taxon.self_and_descendants.pluck(:name) }
-                       ).each { |taxon| products.push(taxon.products) } %>
+                              taxon.leaf? ? taxon.name : taxon.self_and_descendants.pluck(:name) } )
+                 .where.not('spree_products.id': product.id)
+                 .each { |taxon| products.push(taxon.products) } %>
   <%= render products[0..3], location: :products %>
 </div>
 
 <!--products = Spree::Taxon.new.products-->
 <!--Spree::Taxon.includes(:products).where(name: product.taxons.flat_map { |taxon| taxon.leaf? ? taxon.name : taxon.self_and_descendants,pluck(:name) } ).each do |taxon|-->
-<!--  products.push(taxon.products)-->
+<!--  taxon.products.include?(product) ? products.push(taxon.products.delete(product)) : products.push(taxon.products)-->
 <!--end-->
