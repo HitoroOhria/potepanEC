@@ -6,14 +6,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-sm-4 col-xs-12 sideBar">
-        <%= render 'panel_nest', panel_name: '商品カテゴリー', panel_items: Spree::Taxonomy.all %>
+        <%= render 'panel_nest', panel_name: '商品カテゴリー', panel_items: Spree::Taxonomy.includes(:taxons).all %>
         <%= render 'panel',      panel_name: '色から探す',     panel_items: option_values('tshirt-color') %>
         <%= render 'panel',      panel_name: 'サイズから探す',  panel_items: option_values('tshirt-size') %>
       </div>
       <div class="col-md-9 col-sm-8 col-xs-12">
         <%= render 'filter_area' %>
         <div class="row">
-          <%= render @products %>
+          <%= render Spree::Product.includes(master: [ :images, :default_price ]).where(name: @products.pluck(:name)) %>
         </div>
       </div>
     </div>
