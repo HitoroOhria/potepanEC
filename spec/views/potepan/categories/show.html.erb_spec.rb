@@ -20,7 +20,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
   feature 'GET potepan/categories/:taxon_id' do
     it { should have_title full_title(taxon1.name) }
 
-    context 'カテゴリーパネルの「商品カテゴリー」のレイアウトは、' do
+    context 'カテゴリーパネルの「商品カテゴリー」のレイアウトは' do
       it { should have_css('.panel-heading', text: '商品カテゴリー') }
       it { should have_css('a',              text: taxon1.taxonomy.name, visible: false) }
       it {

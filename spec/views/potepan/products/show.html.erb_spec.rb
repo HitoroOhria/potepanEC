@@ -2,26 +2,21 @@ require 'rails_helper'
 
 RSpec.describe "products/show.html.erb", type: :view do
   let(:product) { create(:product) }
+
   before do
     product.taxons.create(attributes_for(:taxon))
     visit potepan_product_path(product.id)
   end
 
+  subject { page }
+
   describe 'GET potepan/products/:product_id' do
-    it 'titleがfull_title(@product.name)と一致する' do
-      expect(page.title).to eq full_title(product.name)
-    end
+    it { should have_title(full_title(product.name)) }
 
-    it 'bodyに@productのname属性が表示されている' do
-      expect(page).to have_content product.name
-    end
+    it { should have_css('h2', text: product.name) }
 
-    it 'bodyに@productのprice属性が表示されている' do
-      expect(page).to have_content product.price.round
-    end
+    it { should have_css('h3', text: "#{product.price.round}円") }
 
-    it 'bodyに@productのdescription属性が表示されている' do
-      expect(page).to have_content product.description
-    end
+    it { should have_css('p',  text: product.description) }
   end
 end
