@@ -13,7 +13,7 @@
       <div class="col-md-9 col-sm-8 col-xs-12">
         <%= render 'filter_area' %>
         <div class="row">
-          <%= render Spree::Product.includes(master: [ :images, :default_price ]).where(name: @products.pluck(:name)) %>
+          <%= render product_includes_table_where(@products) %>
         </div>
       </div>
     </div>
