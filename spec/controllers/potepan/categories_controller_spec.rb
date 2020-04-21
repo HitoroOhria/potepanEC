@@ -4,7 +4,7 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
   describe '#show' do
     let(:taxonomy)  { create(:taxonomy) }
     let(:taxon1)    { taxonomy.root }
-    let(:taxon2)    { create(:taxon, taxonomy: taxonomy) }
+    let(:taxon2)    { taxon1.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id)) }
     let!(:product1) { taxon1.products.create(attributes_for(:product, shipping_category_id: 1)) }
     let!(:product2) { taxon2.products.create(attributes_for(:product, shipping_category_id: 1)) }
 
@@ -19,12 +19,12 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
 
       it { should render_template :show }
 
-      it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonomyモデルオブジェクトである' do
+      it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonモデルオブジェクトである' do
         expect(assigns(:taxon)).to eq taxon1
       end
 
-      it '@productsは、@taxon変数に関連するSpree::Taxonomyモデルの、関連する全てのSpree::Productモデルのコレクションである' do
-        expect(assigns(:products)).to eq taxon1.products.push(taxon2.products)
+      it '@productsは、@taxonの自身と全ての子ノードに属する、Spree::Productモデルのコレクションである' do
+        expect(assigns(:products)).to eq Spree::Taxon.find(taxon1.id).all_products
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
         expect(assigns(:taxon)).to eq taxon2
       end
 
-      it '@productsは、@taxon変数に関連する全てのSpree::Productモデルのコレクションである' do
+      it '@productsは、@taxonに属する全てのSpree::Productモデルのコレクションである' do
         expect(assigns(:products)).to eq taxon2.products
       end
     end
