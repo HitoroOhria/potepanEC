@@ -11,7 +11,23 @@
         <%= render 'panel',      panel_name: 'サイズから探す',  panel_items: option_values('tshirt-size') %>
       </div>
       <div class="col-md-9 col-sm-8 col-xs-12">
-        <%= render 'filter_area' %>
+        <div class="row filterArea">
+          <div class="col-xs-6">
+            <select name="guiest_id1" id="guiest_id1" class="select-drop">
+              <option value="0">並び替え</option>
+              <option value="1">人気順</option>
+              <option value="2">安い順</option>
+              <option value="3">新着順</option>
+              <option value="3">高い順</option>
+            </select>
+          </div>
+          <div class="col-xs-6">
+            <div class="btn-group pull-right" role="group">
+              <button type="button" class="btn btn-default active" onclick="window.location.href='product_grid_left_sidebar.html'"><i class="fa fa-th" aria-hidden="true"></i><span>Grid</span></button>
+              <button type="button" class="btn btn-default" onclick="window.location.href='product_list_left_sidebar.html'"><i class="fa fa-th-list" aria-hidden="true"></i><span>List</span></button>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <%= render partial: 'potepan/categories/product', collection: product_includes_table_where(@products) %>
         </div>
@@ -20,4 +36,54 @@
   </div>
 </section>
 
-<%= render 'category_light_section' %>
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="owl-carousel partnersLogoSlider">
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-01.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-02.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-03.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-04.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-05.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-01.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-02.png", :alt => "partner-img") %>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="partnersLogo clearfix">
+              <%= image_tag("img/home/partners/partner-03.png", :alt => "partner-img") %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
