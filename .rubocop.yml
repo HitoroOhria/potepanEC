@@ -15,6 +15,9 @@ Layout/LineLength:
 Metrics/BlockLength:
   Max: 65
 
+Metrics/MethodLength:
+  Max: 13
+
 Lint/NonDeterministicRequireOrder:
   Exclude:
     - 'spec/rails_helper.rb'
