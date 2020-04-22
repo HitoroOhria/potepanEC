@@ -3,6 +3,6 @@
     <%= taxonomy.name %><i class="fa fa-plus"></i>
   <% end %>
   <ul id=<%= taxonomy.name %> class="collapse collapseItem">
-    <%= render taxonomy.taxons[1..taxonomy.taxons.count] %>
+    <%= render partial: 'potepan/categories/taxon', collection: taxonomy.root.descendants %>
   </ul>
 </li>
