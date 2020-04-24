@@ -51,8 +51,8 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
           should have_link(product2.name, href: potepan_product_path(product2.id))
         }
         it {
-          should have_css('h3', text: "#{product1.price.round}円")
-          should have_css('h3', text: "#{product2.price.round}円")
+          should have_css('h3', text: product_price(product1))
+          should have_css('h3', text: product_price(product2))
         }
       end
 
@@ -63,7 +63,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
 
         it { should have_css('.productBox', count: taxon2.products.count) }
         it { should have_link(product2.name, href: potepan_product_path(product2.id)) }
-        it { should have_css('h3', text: "#{product2.price.round}円") }
+        it { should have_css('h3', text: product_price(product2)) }
       end
     end
   end

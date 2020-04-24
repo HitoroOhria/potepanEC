@@ -68,6 +68,7 @@ RSpec.configure do |config|
 
   # use Helpers
   config.include ApplicationHelper
+  config.include Potepan::PotepanHelper
   config.include Potepan::CategoriesHelper
   config.include Potepan::ProductsHelper
 

@@ -15,7 +15,7 @@ RSpec.describe "products/show.html.erb", type: :view do
 
     it { should have_css('h2', text: product.name) }
 
-    it { should have_css('h3', text: "#{product.price.round}円") }
+    it { should have_css('h3', text: product_price(product)) }
 
     it { should have_css('p',  text: product.description) }
   end
