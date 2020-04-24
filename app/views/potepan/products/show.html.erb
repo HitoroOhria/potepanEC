@@ -35,7 +35,7 @@
               </li>
             </ul>
             <h2><%= @product.name %></h2>
-            <h3><%= @product.price.round %>円</h3>
+            <h3><%= product_price(@product) %></h3>
             <p><%= @product.description %><p>
             <span class="quick-drop">
               <select name="guiest_id3" id="guiest_id3" class="select-drop">
