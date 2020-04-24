@@ -1,8 +1,8 @@
 <li>
-  <%= link_to 'javascript:;', data: { toggle: 'collapse', target: "##{taxonomy.name}" } do %>
+  <%= link_to 'javascript:;', data: { toggle: 'collapse', target: "##{taxonomy.id}" } do %>
     <%= taxonomy.name %><i class="fa fa-plus"></i>
   <% end %>
-  <ul id=<%= taxonomy.name %> class="collapse collapseItem">
+  <ul id=<%= taxonomy.id %> class="collapse collapseItem">
     <%= render partial: 'potepan/categories/taxon', collection: taxonomy.root.descendants %>
   </ul>
 </li>
