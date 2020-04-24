@@ -67,16 +67,6 @@ Rails.application.configure do
 
   # Paperclip Setting
   Paperclip.options[:command_path] = "/usr/local/bin/"
-  config.paperclip_defaults = {
-    storage:      :s3,
-    bucket:       'stylishcoffee-development',
-    s3_host_name: 's3-ap-northeast-1.amazonaws.com',
-    s3_credentials: {
-      s3_region:         ENV['AWS_S3_REGION'],
-      access_key_id:     ENV['AWS_S3_ACCESS_KEY'],
-      secret_access_key: ENV['AWS_S3_SECRET_ACCESS_KEY']
-    }
-  }
 
   # Bullet Setting
   config.after_initialize do

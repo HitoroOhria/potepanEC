@@ -94,6 +94,9 @@ Rails.application.configure do
 
   # Paperclip Setting
   Paperclip.options[:command_path] = "/usr/local/bin/"
+  Spree::Image.attachment_definitions[:attachment][:url]         = 'stylishcoffee-production.s3.amazonaws.com'
+  Spree::Image.attachment_definitions[:attachment][:default_url] = '/stylishcoffee-production.s3-ap-northeast-1.amazonaws.com/spree/products/noimage/:style.png'
+  Spree::Image.attachment_definitions[:attachment][:path]        = '/spree/products/:id/:style/:basename.:extension'
   config.paperclip_defaults = {
     storage:      :s3,
     bucket:       'stylishcoffee-production',
