@@ -1,16 +1,16 @@
 module Potepan::ProductsHelper
-  def render_carousel_image(product, carousel_type: :large)
+  def render_carousel_image(product, image_style: :large)
     images = product.images
     if images.present?
       render partial: 'potepan/shared/image',
              collection: images,
-             locals: { carousel_type: carousel_type }
+             locals: { image_style: image_style }
     else
       render partial: 'potepan/shared/image',
              locals: {
                image: Spree::Image.new,
                image_counter: 0,
-               carousel_type: carousel_type
+               image_style: image_style
              }
     end
   end
