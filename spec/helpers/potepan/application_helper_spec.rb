@@ -17,7 +17,11 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
       it { should eq '1,980JPY' }
     end
 
-    context 'product.pricesに、currency属性が"JPY"のpriceがない時' do
+    context 'product.pricesに、currency属性が"JPY"のpriceがなく、currency属性が"USD"のpriceがある時' do
+      it { should eq '10,775JPY' }
+    end
+
+    context 'product.pricesに、priceのcurrency属性が"JPY"もUSD"もない時' do
       it { should eq '10,775JPY' }
     end
   end

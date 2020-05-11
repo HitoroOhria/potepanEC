@@ -4,8 +4,7 @@ module Potepan::CategoriesHelper
   end
 
   def product_includes_table_where(products)
-    Spree::Product.includes([master: %i[default_price images], variants_including_master: :prices],
-                            :prices)
+    Spree::Product.includes([master: :images, variants_including_master: :prices], :prices)
                   .where(id: products.pluck(:id))
   end
 
