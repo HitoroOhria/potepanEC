@@ -1,4 +1,4 @@
-module Potepan::PotepanHelper
+module Potepan::ApplicationHelper
   def product_price(product)
     if (jpy_price = product.prices.find { |price| price.currency == 'JPY' })
       number_to_currency(jpy_price.amount, format: '%n%u', unit: 'JPY', precision: 0)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "helpers/potepan/potepan_helper.rb", type: :helper do
+RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
   let(:product) { create(:product, price: 100) }
 
   describe 'product_price(product)' do
