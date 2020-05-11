@@ -9,18 +9,18 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
 
     context 'product.master.defaul_priceの、currency属性が"JPY"の時' do
       before do
-        product.master.default_price.update_attributes(amount: rand(500000), currency: 'JPY')
+        product.master.default_price.update_attributes(amount: rand(500_000), currency: 'JPY')
       end
 
-      it { should match /.*\d{1,3}JPY/ }
+      it { should match(/.*\d{1,3}JPY/) }
     end
 
     context 'product.master.defaul_priceの、currency属性が"JPY"以外の時' do
       before do
-        product.master.default_price.update_attributes(amount: rand(500000), currency: 'USD')
+        product.master.default_price.update_attributes(amount: rand(500_000), currency: 'USD')
       end
 
-      it { should match /.*\d{1,3}.\d{2}[A-Z]{3}/ }
+      it { should match(/.*\d{1,3}.\d{2}[A-Z]{3}/) }
     end
   end
 end

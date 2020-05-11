@@ -10,13 +10,13 @@
           <div class="media-left productSlider">
             <div id="carousel" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
-                <%= render_carousel_image(@product) %>
+                <%= render partial: 'potepan/shared/image', collection: @product.show_images, locals: { image_style: :large } %>
               </div>
             </div>
             <div class="clearfix">
               <div id="thumbcarousel" class="carousel slide" data-interval="false">
                 <div class="carousel-inner">
-                  <%= render_carousel_image(@product, image_style: :small) %>
+                  <%= render partial: 'potepan/shared/image', collection: @product.show_images, locals: { image_style: :small } %>
                 </div>
                 <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev">
                   <span class="glyphicon glyphicon-chevron-left"></span>

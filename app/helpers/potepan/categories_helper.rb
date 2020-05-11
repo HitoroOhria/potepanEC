@@ -4,11 +4,6 @@ module Potepan::CategoriesHelper
   end
 
   def product_includes_table_where(products)
-    Spree::Product.includes([master: :images, variants_including_master: :prices], :prices)
-                  .where(id: products.pluck(:id))
-  end
-
-  def image_product_url(product)
-    product.images.empty? ? Spree::Image.new.url(:product) : product.images.first.url(:product)
+    Spree::Product.includes(master: %i[images default_price]).where(id: products.pluck(:id))
   end
 end
