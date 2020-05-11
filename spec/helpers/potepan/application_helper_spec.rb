@@ -29,7 +29,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         product.prices.create(attributes_for(:price, amount: 37.45, currency: 'ARI'))
       end
 
-      it { should eq '2057..99EUR' }
+      it { should eq '2,057.99EUR' }
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
     end
 
     context '引数 currency に指定した通貨単位が、product.pricesのcurrency属性の中にないとき' do
-      it 'nilを返すこと' do
+      it '引数 currency に"HOG"を指定すると、nilを返すこと' do
         expect(find_currency(product.prices, 'HOG')).to eq nil
       end
     end
