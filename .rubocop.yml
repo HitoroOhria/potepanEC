@@ -10,10 +10,12 @@ AllCops:
     - 'spec/rails_helper.rb'
 
 Layout/LineLength:
+
   Max: 105
 
 Metrics/BlockLength:
-  Max: 65
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/MethodLength:
   Max: 13
