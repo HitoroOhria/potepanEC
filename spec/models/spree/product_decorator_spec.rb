@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Product, type: :model do
-  viewable_type = { viewable_type: 'Spree::Variant' }
+  viewable_type = [:viewable_type, 'Spree::Variant']
 
   let(:product)               { create(:product, shipping_category_id: 1) }
   let(:master_variant)        { product.master }
-  let(:master_variant_image1) { create(:image, viewable_type, viewable_id: master_variant.id) }
-  let(:master_variant_image2) { create(:image, viewable_type, viewable_id: master_variant.id) }
+  let(:master_variant_image1) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
+  let(:master_variant_image2) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
   let(:other_variant)         { create(:variant, product: product) }
-  let(:other_variant_image1)  { create(:image, viewable_type, viewable_id: other_variant.id) }
-  let(:other_variant_image2)  { create(:image, viewable_type, viewable_id: other_variant.id) }
+  let(:other_variant_image1)  { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
+  let(:other_variant_image2)  { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
 
   describe '#main_image' do
     subject { product.main_image }
@@ -79,11 +79,15 @@ RSpec.describe Spree::Product, type: :model do
       subject(:show_images) { product.show_images }
 
       it '返すコレクションの個数は1であること' do
-        expect(show_images.count).to eq 1
+        expect(show_images.size).to eq 1
       end
 
-      it '返すコレクションの1個目のオブジェクトの属性は、Spree::Image.newの属性であること' do
-        expect(sho_images.first.attributes).to eq Spree::Image.new.attributes
+      it '返すコレクションの1個目のオブジェクトは、Spree::Imageクラスのオブジェクトであること' do
+        expect(show_images.first.class).to eq Spree::Image
+      end
+
+      it '返すコレクションの1個目のオブジェクトは、DBに保存されていないインスタンスであること' do
+        expect(show_images.first.new_record?).to eq true
       end
     end
   end
