@@ -16,7 +16,7 @@ RSpec.describe Potepan::ProductsController, type: :controller do
     it { should render_template :show }
 
     it '@product変数は、id属性がparams[:product_id]に対応したSpree::Productモデルオブジェクトである' do
-      expect(assigns(:product)).to eq Spree::Product.find(product.id)
+      expect(assigns(:product)).to eq product
     end
   end
 end
