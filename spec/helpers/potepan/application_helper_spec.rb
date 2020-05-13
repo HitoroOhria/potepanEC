@@ -16,7 +16,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         should match(/\d+JPY/)
       end
 
-      context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時、' do
+      context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時' do
         before do
           product.master.default_price.update_attributes(amount: rand(999), currency: 'JPY')
         end
@@ -26,7 +26,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
       end
 
-      context 'product.master.defaul_priceの、amount属性の数値が4桁以上の時、' do
+      context 'product.master.defaul_priceの、amount属性の数値が4桁以上の時' do
         before do
           product.master.default_price.update_attributes(amount: rand(1000..500_000), currency: 'JPY')
         end
@@ -46,7 +46,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         should match(/\d+USD/)
       end
 
-      context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時、' do
+      context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時' do
         before do
           product.master.default_price.update_attributes(amount: rand(999), currency: 'JPY')
         end
@@ -56,7 +56,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
       end
 
-      context 'product.master.defaul_priceの、amount属性の数値が4桁以上の時、' do
+      context 'product.master.defaul_priceの、amount属性の数値が4桁以上の時' do
         before do
           product.master.default_price.update_attributes(amount: rand(1000..500_000), currency: 'JPY')
         end
