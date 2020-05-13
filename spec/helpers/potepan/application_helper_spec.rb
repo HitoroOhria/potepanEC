@@ -32,7 +32,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
 
         it '"◯◯,◯◯◯"のように、数字部分を3桁毎にカンマで区切った文字列を返す' do
-            should match(/\d+,\d{3}/)
+          should match(/\d+,\d{3}/)
         end
       end
     end
@@ -42,7 +42,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         product.master.default_price.update_attributes(amount: rand(500_000), currency: 'USD')
       end
 
-      it '"○○○#{currency}"のように、数字の後にcurrencyの文字列を追加した文字列を返す' do
+      it '"○○◯CURRENCY"のように、数字の後にcurrency属性の値を追加した文字列を返す' do
         should match(/\d+USD/)
       end
 

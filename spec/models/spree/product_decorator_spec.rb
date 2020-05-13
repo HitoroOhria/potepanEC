@@ -28,9 +28,6 @@ RSpec.describe Spree::Product, type: :model do
         master_variant
         other_variant_image1
         other_variant_image2
-
-        puts "product.variant_images.all => #{product.variant_images.all}"
-        puts "product.variant_images.first => #{product.variant_images.first}"
       end
 
       it { should eq other_variant_image1 }
