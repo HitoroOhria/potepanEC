@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Spree::Product, type: :model do
   viewable_type = [:viewable_type, 'Spree::Variant']
 
-  let(:product)               { create(:product, shipping_category_id: 1) }
+  let(:product)               { create(:product) }
   let(:master_variant)        { product.master }
   let(:master_variant_image1) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
   let(:master_variant_image2) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
