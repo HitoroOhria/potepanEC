@@ -50,4 +50,7 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.raise = true # raise an error if n+1 query occurs
   end
+
+  # Paperclip Setting
+  Paperclip.options[:command_path] = "/usr/local/bin/"
 end
