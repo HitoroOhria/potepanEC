@@ -4,7 +4,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
   let(:product) { create(:product) }
   let(:variant) { create(:variant, product: product) }
 
-  describe 'product_price(product)' do
+  describe '#product_price(product)' do
     subject { product_price(product) }
 
     context 'product.master.defaul_priceの、currency属性が"JPY"の時' do
@@ -13,7 +13,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
       end
 
       it '"○○○JPY"のように、数字の後に"JPY"を付けた文字列を返す' do
-        should match(/\d+JPY/)
+        is_expected.to match(/\d+JPY/)
       end
 
       context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時' do
@@ -22,7 +22,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
 
         it '"◯◯◯"のように、数字部分にカンマを含まない' do
-          should_not include(',')
+          is_expected.to_not include(',')
         end
       end
 
@@ -32,7 +32,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
 
         it '"◯◯,◯◯◯"のように、数字部分を3桁毎にカンマで区切った文字列を返す' do
-          should match(/\d+,\d{3}/)
+          is_expected.to match(/\d+,\d{3}/)
         end
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
       end
 
       it '"○○◯CURRENCY"のように、数字の後にcurrency属性の値を追加した文字列を返す' do
-        should match(/\d+USD/)
+        is_expected.to match(/\d+USD/)
       end
 
       context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時' do
@@ -52,7 +52,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
 
         it '"◯◯◯"のように、数字部分にカンマを含まない' do
-          should_not include(',')
+          is_expected.to_not include(',')
         end
       end
 
@@ -62,7 +62,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         end
 
         it '"◯◯,◯◯◯"のように、数字部分を3桁毎にカンマで区切った文字列を返す' do
-          should match(/\d+,\d{3}/)
+          is_expected.to match(/\d+,\d{3}/)
         end
       end
     end

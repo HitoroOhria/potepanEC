@@ -11,9 +11,9 @@ RSpec.describe Potepan::ProductsController, type: :controller do
   subject { response }
 
   describe '#show' do
-    it { should have_http_status 200 }
+    it { is_expected.to have_http_status 200 }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
 
     it '@product変数は、id属性がparams[:product_id]に対応したSpree::Productモデルオブジェクトである' do
       expect(assigns(:product)).to eq product

@@ -25,25 +25,25 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
   subject { page }
 
   feature 'GET potepan/categories/:taxon_id' do
-    it { should have_title full_title(taxon_root.name) }
+    it { is_expected.to have_title full_title(taxon_root.name) }
 
     context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
-      it { should have_css('.panel-heading', text: '商品カテゴリー') }
-      it { should have_css('a',              text: taxon_root.taxonomy.name, visible: false) }
+      it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
+      it { is_expected.to have_css('a',              text: taxon_root.taxonomy.name, visible: false) }
       it {
-        should have_css('a', text: taxon_root.name, visible: false)
-        should have_css('a', text: taxon_child.name, visible: false)
+        is_expected.to have_css('a', text: taxon_root.name, visible: false)
+        is_expected.to have_css('a', text: taxon_child.name, visible: false)
       }
     end
 
     context 'カテゴリーパネルの「色から探す」のレイアウト' do
-      it { should have_css('.panel-heading',  text: '色から探す') }
-      it { should have_css('a',               text: color_option_value.name) }
+      it { is_expected.to have_css('.panel-heading',  text: '色から探す') }
+      it { is_expected.to have_css('a',               text: color_option_value.name) }
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
-      it { should have_css('.panel-heading',  text: 'サイズから探す') }
-      it { should have_css('a',               text: size_option_value.name) }
+      it { is_expected.to have_css('.panel-heading',  text: 'サイズから探す') }
+      it { is_expected.to have_css('a',               text: size_option_value.name) }
     end
 
     context 'プロダクト一覧表示のレイアウト' do
@@ -52,16 +52,16 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
           taxonomy.taxons.inject(0) { |product_counter, taxon| product_counter + taxon.products.count }
         }
 
-        it { should have_css('.productBox', count: taxonomy_products_count) }
+        it { is_expected.to have_css('.productBox', count: taxonomy_products_count) }
         it {
-          should have_link(product_by_taxon_root.name,
-                           href: potepan_product_path(product_by_taxon_root.id))
-          should have_link(product_by_taxon_child.name,
-                           href: potepan_product_path(product_by_taxon_child.id))
+          is_expected.to have_link(product_by_taxon_root.name,
+                                   href: potepan_product_path(product_by_taxon_root.id))
+          is_expected.to have_link(product_by_taxon_child.name,
+                                   href: potepan_product_path(product_by_taxon_child.id))
         }
         it {
-          should have_css('h3', text: product_price(product_by_taxon_root))
-          should have_css('h3', text: product_price(product_by_taxon_child))
+          is_expected.to have_css('h3', text: product_price(product_by_taxon_root))
+          is_expected.to have_css('h3', text: product_price(product_by_taxon_child))
         }
       end
 
@@ -70,12 +70,12 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
           visit potepan_category_path(taxon_child.id)
         end
 
-        it { should have_css('.productBox', count: taxon_child.products.count) }
+        it { is_expected.to have_css('.productBox', count: taxon_child.products.count) }
         it {
-          should have_link(product_by_taxon_child.name,
-                           href: potepan_product_path(product_by_taxon_child.id))
+          is_expected.to have_link(product_by_taxon_child.name,
+                                   href: potepan_product_path(product_by_taxon_child.id))
         }
-        it { should have_css('h3', text: product_price(product_by_taxon_child)) }
+        it { is_expected.to have_css('h3', text: product_price(product_by_taxon_child)) }
       end
     end
   end

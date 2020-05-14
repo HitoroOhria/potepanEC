@@ -26,9 +26,9 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
         get :show, params: { taxon_id: taxon_root.id }
       end
 
-      it { should have_http_status 200 }
+      it { is_expected.to have_http_status 200 }
 
-      it { should render_template :show }
+      it { is_expected.to render_template :show }
 
       it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonモデルオブジェクトである' do
         expect(assigns(:taxon)).to eq taxon_root
@@ -48,9 +48,9 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
         get :show, params: { taxon_id: taxon_child.id }
       end
 
-      it { should have_http_status 200 }
+      it { is_expected.to have_http_status 200 }
 
-      it { should render_template :show }
+      it { is_expected.to render_template :show }
 
       it '@taxonは、id属性がparams[:taxon_id]に対応したSpree::Taxonモデルオブジェクトである' do
         expect(assigns(:taxon)).to eq taxon_child

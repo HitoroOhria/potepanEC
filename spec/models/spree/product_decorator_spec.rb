@@ -20,7 +20,9 @@ RSpec.describe Spree::Product, type: :model do
         master_variant_image2
       end
 
-      it { should eq master_variant_image1 }
+      it 'product.imagesの1番目の画像を返すこと' do
+        is_expected.to eq master_variant_image1
+      end
     end
 
     context 'product.imagesに画像がなく、product.variant_imagesに画像があるとき' do
@@ -30,7 +32,9 @@ RSpec.describe Spree::Product, type: :model do
         other_variant_image2
       end
 
-      it { should eq other_variant_image1 }
+      it 'product.variant_imagesの1番目の画像を返すこと' do
+        is_expected.to eq other_variant_image1
+      end
     end
 
     context 'product.imagesにも、product.variant_imagesにも画像がないとき' do
@@ -39,9 +43,9 @@ RSpec.describe Spree::Product, type: :model do
         other_variant
       end
 
-      subject { product.main_image.attributes }
-
-      it { should eq Spree::Image.new.attributes }
+      it 'Spree::Images.newを返すこと' do
+        expect(product.main_image.attributes).to eq Spree::Image.new.attributes
+      end
     end
   end
 
@@ -54,7 +58,9 @@ RSpec.describe Spree::Product, type: :model do
         master_variant_image2
       end
 
-      it { should eq product.images }
+      it 'product.imagesを返すこと' do
+        is_expected.to eq product.images
+      end
     end
 
     context 'product.imagesに画像がなく、product.variant_imagesに画像があるとき' do
@@ -64,7 +70,9 @@ RSpec.describe Spree::Product, type: :model do
         other_variant_image2
       end
 
-      it { should eq product.variant_images }
+      it 'product.variant_imagesを返すこと' do
+        is_expected.to eq product.variant_images
+      end
     end
 
     context 'product.imagesにも、product.variant_imagesにも画像がないとき' do
