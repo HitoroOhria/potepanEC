@@ -1,8 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "potepan/categories/show.html.erb", type: :view do
-  include_context "taxonomy and taxon by root and child setup"
-  include_context "product by root and child setup"
+  let!(:taxonomy)    { create(:taxonomy) }
+  let!(:taxon_root)  { taxonomy.root }
+  let!(:taxon_child) {
+    taxon_root.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id))
+  }
+  let!(:product_by_taxon_root) {
+    taxon_root.products.create(attributes_for(:product, shipping_category_id: 1))
+  }
+  let!(:product_by_taxon_child) {
+    taxon_child.products.create(attributes_for(:product, shipping_category_id: 1))
+  }
 
   let!(:option_type_size)       { create(:option_type,  name: 'tshirt-size') }
   let!(:option_type_color)      { create(:option_type,  name: 'tshirt-color') }
