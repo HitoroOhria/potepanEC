@@ -46,6 +46,10 @@ RUN apt-get update                                                              
   && mv ~/chromedriver /usr/bin/chromedriver                                                                                            \
   && apt-get clean
 
+ADD . /potepanec
+WORKDIR /potepanec
+RUN bundle install
+
 ENTRYPOINT [ \
   "prehook", "bundle install -j3 --path vendor/bundle", "--", \
   "prehook", "bundle exec rails init_db:setup", "--", \
