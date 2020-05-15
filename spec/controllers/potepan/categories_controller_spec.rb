@@ -41,6 +41,14 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
       it '@taxonomyiesは、全てのSpree::Taxonomyモデルのコレクションである' do
         expect(assigns(:taxonomies)).to eq Spree::Taxonomy.all
       end
+
+      it '@option_values_sizeは、name属性が"tshirt-size"のSpree::OptionTypeの.option_valuesである' do
+        expect(assigns(:option_values_size)).to eq option_type_size.option_values
+      end
+
+      it '@option_values_colorは、name属性が"tshirt-color"のSpree::OptionTypeの.option_valuesである' do
+        expect(assigns(:option_values_color)).to eq option_type_color.option_values
+      end
     end
 
     context 'ルーティングの:taxon_idに対応するSpree::Taxonオブジェクトが葉ノードの時' do
@@ -62,6 +70,14 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
 
       it '@taxonomyiesは、全てのSpree::Taxonomyモデルのコレクションである' do
         expect(assigns(:taxonomies)).to eq Spree::Taxonomy.all
+      end
+
+      it '@option_values_sizeは、name属性が"tshirt-size"のSpree::OptionTypeの.option_valuesである' do
+        expect(assigns(:option_values_size)).to eq option_type_size.option_values
+      end
+
+      it '@option_values_colorは、name属性が"tshirt-color"のSpree::OptionTypeの.option_valuesである' do
+        expect(assigns(:option_values_color)).to eq option_type_color.option_values
       end
     end
   end

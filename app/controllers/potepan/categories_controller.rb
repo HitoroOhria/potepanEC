@@ -3,8 +3,8 @@ class Potepan::CategoriesController < ApplicationController
     @taxon = Spree::Taxon.find(params[:taxon_id])
     @products = @taxon.all_products.includes(master: :default_price)
     @taxonomies = Spree::Taxonomy.all.includes(:root)
-    @size_option_values = option_values('tshirt-size')
-    @color_option_values = option_values('tshirt-color')
+    @option_values_size = option_values('tshirt-size')
+    @option_values_color = option_values('tshirt-color')
   end
 
   private

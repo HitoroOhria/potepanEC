@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "potepan/categories/show.html.erb", type: :view do
-  let!(:taxonomy)    { create(:taxonomy) }
+  let!(:taxonomy)    { create(:taxonomy, name: 'Category') }
   let!(:taxon_root)  { taxonomy.root }
   let!(:taxon_child) {
-    taxon_root.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id))
+    taxon_root.children.create(attributes_for(:taxon, name: 'Bag', taxonomy_id: taxonomy.id))
   }
 
   let!(:option_type_size)   { create(:option_type,  name: 'tshirt-size') }
@@ -23,19 +23,19 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
 
     context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
-      it { is_expected.to have_css('a',              text: taxon_root.taxonomy.name, visible: false) }
+      it { is_expected.to have_css('a', text: taxon_root.taxonomy.name, visible: false) }
       it { is_expected.to have_css('a', text: taxon_root.name,  visible: false) }
       it { is_expected.to have_css('a', text: taxon_child.name, visible: false) }
     end
 
     context 'カテゴリーパネルの「色から探す」のレイアウト' do
-      it { is_expected.to have_css('.panel-heading',  text: '色から探す') }
-      it { is_expected.to have_css('a',               text: option_value_color.name) }
+      it { is_expected.to have_css('.panel-heading', text: '色から探す') }
+      it { is_expected.to have_css('a',              text: option_value_color.name) }
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
-      it { is_expected.to have_css('.panel-heading',  text: 'サイズから探す') }
-      it { is_expected.to have_css('a',               text: option_value_size.name) }
+      it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
+      it { is_expected.to have_css('a',              text: option_value_size.name) }
     end
 
     context 'プロダクト一覧表示のレイアウト' do
@@ -86,7 +86,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
           is_expected.to have_link(taxon_child_product.name,
                                    href: potepan_product_path(taxon_child_product.id))
         }
-        it { is_expected.to have_css('h3', text: product_price(taxon_child_product)) }
+        it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
         it { is_expected.to have_css('img', id: child_product_image.id.to_s) }
       end
     end
