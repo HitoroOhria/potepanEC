@@ -7,17 +7,17 @@ RSpec.describe Potepan::CategoriesController, type: :controller do
     let!(:taxon_child) {
       taxon_root.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id))
     }
-    let!(:product_by_taxon_root) {
+    let!(:taxon_root_product) {
       taxon_root.products.create(attributes_for(:product, shipping_category_id: 1))
     }
-    let!(:product_by_taxon_child) {
+    let!(:by_taxon_child_product) {
       taxon_child.products.create(attributes_for(:product, shipping_category_id: 1))
     }
 
     let!(:option_type_size)       { create(:option_type,  name: 'tshirt-size') }
     let!(:option_type_color)      { create(:option_type,  name: 'tshirt-color') }
-    let!(:size_option_value)      { create(:option_value, option_type: option_type_size) }
-    let!(:color_option_value)     { create(:option_value, option_type: option_type_color) }
+    let!(:option_value_size)      { create(:option_value, option_type: option_type_size) }
+    let!(:option_value_color)     { create(:option_value, option_type: option_type_color) }
 
     subject { response }
 

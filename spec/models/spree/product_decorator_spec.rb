@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Product, type: :model do
-  viewable_type = [:viewable_type, 'Spree::Variant']
+  let(:viewable_type) { [:viewable_type, 'Spree::Variant'] }
 
   let(:product)               { create(:product) }
   let(:master_variant)        { product.master }

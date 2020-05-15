@@ -42,7 +42,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
         product.master.default_price.update_attributes(amount: rand(500_000), currency: 'USD')
       end
 
-      it '"○○◯CURRENCY"のように、数字の後にcurrency属性の値を追加した文字列を返す' do
+      it '"○○◯CUR"のように、数字の後にcurrency属性の値を追加した文字列を返す' do
         is_expected.to match(/\d+USD/)
       end
 
