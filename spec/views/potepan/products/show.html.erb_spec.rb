@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "products/show.html.erb", type: :view do
-  let(:viewable_type) { [:viewable_type, 'Spree::Variant'] }
-
   let!(:product)         { create(:product) }
   let!(:variant)         { product.master }
-  let!(:product_image1)  { create(:image, [[:viewable_id, variant.id], viewable_type].to_h) }
-  let!(:product_image2)  { create(:image, [[:viewable_id, variant.id], viewable_type].to_h) }
+  let!(:product_image1)  { create(:image, viewable: variant) }
+  let!(:product_image2)  { create(:image, viewable: variant) }
 
   before do
     product.taxons.create(attributes_for(:taxon))
