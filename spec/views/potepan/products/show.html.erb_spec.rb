@@ -24,12 +24,12 @@ RSpec.describe "products/show.html.erb", type: :view do
 
     it { is_expected.to have_css('p',  text: product.description) }
 
-    it { is_expected.to have_css('img', id: "#{product_image1.id}_large") }
+    it { is_expected.to have_css('img', id: "large_image_#{product_image1.id}") }
 
-    it { is_expected.to have_css('img', id: "#{product_image2.id}_large") }
+    it { is_expected.to have_css('img', id: "large_image_#{product_image2.id}") }
 
-    it { is_expected.to have_css('img', id: "#{product_image1.id}_small") }
+    it { is_expected.to have_css('img', id: "small_image_#{product_image1.id}") }
 
-    it { is_expected.to have_css('img', id: "#{product_image2.id}_small") }
+    it { is_expected.to have_css('img', id: "small_image_#{product_image2.id}") }
   end
 end

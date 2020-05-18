@@ -72,8 +72,8 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         }
         it { is_expected.to have_css('h3',  text: product_price(taxon_root_product)) }
         it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
-        it { is_expected.to have_css('img', id: root_product_image.id.to_s) }
-        it { is_expected.to have_css('img', id: child_product_image.id.to_s) }
+        it { is_expected.to have_css('img', id:   "product_image_#{root_product_image.id}") }
+        it { is_expected.to have_css('img', id:   "product_image_#{child_product_image.id}") }
       end
 
       context 'ルーティングの:taxon_idのモデルオブジェクトが葉ノードの時' do
@@ -87,7 +87,7 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
                                    href: potepan_product_path(taxon_child_product.id))
         }
         it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
-        it { is_expected.to have_css('img', id: child_product_image.id.to_s) }
+        it { is_expected.to have_css('img', id:   "product_image_#{child_product_image.id}") }
       end
     end
   end
