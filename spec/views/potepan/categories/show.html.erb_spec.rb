@@ -23,18 +23,23 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
 
     context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
+
       it { is_expected.to have_css('a', text: taxon_root.taxonomy.name, visible: false) }
+
       it { is_expected.to have_css('a', text: taxon_root.name,  visible: false) }
+
       it { is_expected.to have_css('a', text: taxon_child.name, visible: false) }
     end
 
     context 'カテゴリーパネルの「色から探す」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '色から探す') }
+
       it { is_expected.to have_css('a',              text: option_value_color.name) }
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
+
       it { is_expected.to have_css('a',              text: option_value_size.name) }
     end
 
@@ -57,23 +62,44 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
       subject { page }
 
       context 'ルーティングの:taxon_idのモデルオブジェクトが親ノードの時' do
+        let(:root_product_url)  { potepan_product_path(taxon_root_product.id) }
+        let(:child_product_url) { potepan_product_path(taxon_child_product.id) }
+
         before do
           visit potepan_category_path(taxon_root.id)
         end
 
         it { is_expected.to have_css('.productBox', count: 2) }
-        it {
-          is_expected.to have_link(taxon_root_product.name,
-                                   href: potepan_product_path(taxon_root_product.id))
-        }
-        it {
-          is_expected.to have_link(taxon_child_product.name,
-                                   href: potepan_product_path(taxon_child_product.id))
-        }
-        it { is_expected.to have_css('h3',  text: product_price(taxon_root_product)) }
-        it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
+
         it { is_expected.to have_css('img', id:   "product_image_#{root_product_image.id}") }
+
         it { is_expected.to have_css('img', id:   "product_image_#{child_product_image.id}") }
+
+        it { is_expected.to have_css('h5',  text: taxon_root_product.name) }
+
+        it { is_expected.to have_css('h5',  text: taxon_child_product.name) }
+
+        it { is_expected.to have_css('h3',  text: product_price(taxon_root_product)) }
+
+        it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
+
+        it {
+          is_expected.to have_link('', id: "product_image_#{root_product_image.id}",
+                                       href: root_product_url)
+        }
+
+        it {
+          is_expected.to have_link('', id: "product_image_#{child_product_image.id}",
+                                       href: child_product_url)
+        }
+
+        it { is_expected.to have_link(taxon_root_product.name, href: root_product_url) }
+
+        it { is_expected.to have_link(taxon_child_product.name, href: child_product_url) }
+
+        it { is_expected.to have_link(product_price(taxon_root_product), href: root_product_url) }
+
+        it { is_expected.to have_link(product_price(taxon_child_product), href: child_product_url) }
       end
 
       context 'ルーティングの:taxon_idのモデルオブジェクトが葉ノードの時' do
@@ -82,12 +108,21 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
         end
 
         it { is_expected.to have_css('.productBox', count: 1) }
-        it {
-          is_expected.to have_link(taxon_child_product.name,
-                                   href: potepan_product_path(taxon_child_product.id))
-        }
-        it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
+
         it { is_expected.to have_css('img', id:   "product_image_#{child_product_image.id}") }
+
+        it { is_expected.to have_css('h5',  text: taxon_child_product.name) }
+
+        it { is_expected.to have_css('h3',  text: product_price(taxon_child_product)) }
+
+        it {
+          is_expected.to have_link('', id: "product_image_#{child_product_image.id}",
+                                       href: child_product_url)
+        }
+
+        it { is_expected.to have_link(taxon_child_product.name, href: child_product_url) }
+
+        it { is_expected.to have_link(product_price(taxon_child_product), href: child_product_url) }
       end
     end
   end
