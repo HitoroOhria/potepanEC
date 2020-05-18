@@ -12,7 +12,7 @@ RSpec.describe "helpers/potepan/application_helper.rb", type: :helper do
     subject { product_price(product) }
 
     it '"$◯◯◯"のように、数字の前に価格記号を付けた文字列を返す' do
-      is_expected.to match(/$\d+/)
+      is_expected.to match(/\$\d+/)
     end
 
     context 'product.master.defaul_priceの、amount属性の数値が4桁未満の時' do
