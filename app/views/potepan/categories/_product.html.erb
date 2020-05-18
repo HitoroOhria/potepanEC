@@ -9,8 +9,8 @@
     <div class="productCaption clearfix">
       <%= link_to potepan_product_path(product.id) do %>
         <h5><%= product.name %></h5>
+        <h3><%= product_price(product) %></h3>
       <% end %>
-      <h3><%= product_price(product) %></h3>
     </div>
   </div>
 </div>
