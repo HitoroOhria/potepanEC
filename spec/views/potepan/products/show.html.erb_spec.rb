@@ -4,9 +4,9 @@ RSpec.describe "products/show.html.erb", type: :view do
   let(:viewable_type) { [:viewable_type, 'Spree::Variant'] }
 
   let!(:product)         { create(:product) }
-  let!(:product_variant) { product.master }
-  let!(:product_image1)  { create(:image, [[:viewable_id, product_variant.id], viewable_type].to_h) }
-  let!(:product_image2)  { create(:image, [[:viewable_id, product_variant.id], viewable_type].to_h) }
+  let!(:variant)         { product.master }
+  let!(:product_image1)  { create(:image, [[:viewable_id, variant.id], viewable_type].to_h) }
+  let!(:product_image2)  { create(:image, [[:viewable_id, variant.id], viewable_type].to_h) }
 
   before do
     product.taxons.create(attributes_for(:taxon))
@@ -31,5 +31,7 @@ RSpec.describe "products/show.html.erb", type: :view do
     it { is_expected.to have_css('img', id: "small_image_#{product_image1.id}") }
 
     it { is_expected.to have_css('img', id: "small_image_#{product_image2.id}") }
+
+    it { is_expected.to have_link('一覧ページへ戻る', href: product_to_category_path(product)) }
   end
 end
