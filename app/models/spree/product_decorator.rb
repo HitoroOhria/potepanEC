@@ -4,12 +4,12 @@ Spree::Product.class_eval do
   end
 
   def show_images
-    check_present(images) || check_present(variant_images) || (images.new && images)
+    self_or_false(images) || self_or_false(variant_images) || (images.new && images)
   end
 
   private
 
-  def check_present(collection)
+  def self_or_false(collection)
     collection.present? && collection
   end
 end
