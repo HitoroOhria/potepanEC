@@ -2,22 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Potepan::CategoriesController, type: :controller do
   describe '#show' do
-    let!(:taxonomy)    { create(:taxonomy) }
-    let!(:taxon_root)  { taxonomy.root }
-    let!(:taxon_child) {
-      taxon_root.children.create(attributes_for(:taxon, taxonomy_id: taxonomy.id))
-    }
-    let!(:taxon_root_product) {
-      taxon_root.products.create(attributes_for(:product, shipping_category_id: 1))
-    }
-    let!(:by_taxon_child_product) {
-      taxon_child.products.create(attributes_for(:product, shipping_category_id: 1))
-    }
+    let(:taxon_attr)           { attributes_for(:taxon, taxonomy: taxonomy) }
+    let(:product_attr)         { attributes_for(:product, shipping_category_id: 1) }
 
-    let!(:option_type_size)       { create(:option_type,  name: 'tshirt-size') }
-    let!(:option_type_color)      { create(:option_type,  name: 'tshirt-color') }
-    let!(:option_value_size)      { create(:option_value, option_type: option_type_size) }
-    let!(:option_value_color)     { create(:option_value, option_type: option_type_color) }
+    let!(:taxonomy)            { create(:taxonomy) }
+    let!(:taxon_root)          { taxonomy.root }
+    let!(:taxon_child)         { taxon_root.children.create(taxon_attr) }
+    let!(:taxon_root_product)  { taxon_root.products.create(product_attr) }
+    let!(:taxon_child_product) { taxon_child.products.create(product_attr) }
+
+    let!(:option_type_size)    { create(:option_type,  name: 'tshirt-size') }
+    let!(:option_type_color)   { create(:option_type,  name: 'tshirt-color') }
+    let!(:option_value_size)   { create(:option_value, option_type: option_type_size) }
+    let!(:option_value_color)  { create(:option_value, option_type: option_type_color) }
 
     subject { response }
 
