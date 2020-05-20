@@ -44,15 +44,13 @@ RSpec.describe "potepan/categories/show.html.erb", type: :view do
     end
 
     context 'プロダクト一覧表示のレイアウト' do
-      let(:root_product_path) { potepan_product_path(taxon_root_product.id) }
-      let(:child_product_path) { potepan_product_path(taxon_child_product.id) }
+      let(:product_attributes_1) { attributes_for(:product, name: 'Product1', shipping_category_id: 1) }
+      let(:product_attributes_2) { attributes_for(:product, name: 'Product2', shipping_category_id: 1) }
+      let(:root_product_path)    { potepan_product_path(taxon_root_product.id) }
+      let(:child_product_path)   { potepan_product_path(taxon_child_product.id) }
 
-      let!(:taxon_root_product)  {
-        taxon_root.products.create(attributes_for(:product, shipping_category_id: 1))
-      }
-      let!(:taxon_child_product) {
-        taxon_child.products.create(attributes_for(:product, shipping_category_id: 1))
-      }
+      let!(:taxon_root_product)  { taxon_root.products.create(product_attributes_1) }
+      let!(:taxon_child_product) { taxon_child.products.create(product_attributes_2) }
       let!(:root_product_image)  { create(:image, viewable: taxon_root_product.master) }
       let!(:child_product_image) { create(:image, viewable: taxon_child_product.master) }
 
