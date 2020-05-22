@@ -24,36 +24,35 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
     context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
 
-      context 'collapseのレイアウト' do
-        it { is_expected.to have_link(taxonomy.name) }
+      it { is_expected.to have_link(taxonomy.name) }
 
-        it { is_expected.to_not have_link(taxon_child.name, visible: true) }
-
-        context 'collapseのリンクをクリックしたとき' do
-        before do
-          visit potepan_category_path(taxon_root.id)
-          click_link taxonomy.name
-        end
-
-        it { is_expected.to have_link("#{taxon_child.name} (#{taxon_child.products.count})") }
-        end
-      end
+      it { is_expected.to have_link("#{taxon_child.name} (#{taxon_child.products.count})") }
     end
 
     context 'カテゴリーパネルの「色から探す」のレイアウト' do
+      before do
+        rand(3).times { option_value_color.variants.create(attributes_for(:variant)) }
+        visit potepan_category_path(taxon_root.id)
+      end
+
       it { is_expected.to have_css('.panel-heading', text: '色から探す') }
 
-      it { is_expected.to have_link("#{option_value_color.name} (#{option_type_color.products.count})") }
+      it { is_expected.to have_link(option_value_color.name) }
 
-      it { is_expected.to have_css('span' , text: "(#{option_type_color.products.count})") }
+      it { is_expected.to have_css('span' , text: "(#{option_value_color.variants.count})") }
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
+      before do
+        rand(3).times { option_value_size.variants.create(attributes_for(:variant)) }
+        visit potepan_category_path(taxon_root.id)
+      end
+
       it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
 
       it { is_expected.to have_link(option_value_size.name) }
 
-      it { is_expected.to have_css('span' , text: "(#{option_type_size.products.count})") }
+      it { is_expected.to have_css('span' , text: "(#{option_value_size.variants.count})") }
     end
 
     context 'プロダクト一覧表示のレイアウト' do
