@@ -37,9 +37,15 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
       it { is_expected.to have_css('.panel-heading', text: '色から探す') }
 
-      it { is_expected.to have_link(option_value_color.name) }
+      it '「色から探す」パネルの中に、カラー名のリンクがあること' do
+        is_expected.to have_xpath("//div[@class='panel-heading' and contains(text(), '色から探す')]
+                                    /../div/ul/li/a[contains(text(), '#{option_value_color.name}')]")
+      end
 
-      it { is_expected.to have_css('span' , text: "(#{option_value_color.variants.count})") }
+      it 'カラー名のリンクのテキスト部分に、span要素でproductsの個数が表示されていること' do
+        is_expected.to have_xpath("//a[contains(text(), '#{option_value_color.name}')]
+                                    /span[text()='(#{option_value_color.variants.count})']")
+      end
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
@@ -50,9 +56,15 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
       it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
 
-      it { is_expected.to have_link(option_value_size.name) }
+      it '「サイズから探す」パネルの中に、ザイズ名のリンクがあること' do
+        is_expected.to have_xpath("//div[@class='panel-heading' and contains(text(), 'サイズから探す')]
+                                    /../div/ul/li/a[contains(text(), '#{option_value_size.name}')]")
+      end
 
-      it { is_expected.to have_css('span' , text: "(#{option_value_size.variants.count})") }
+      it 'サイズ名のリンクのテキスト部分に、span要素でproductsの個数が表示されていること' do
+        is_expected.to have_xpath("//a[contains(text(), '#{option_value_size.name}')]
+                                    /span[text()='(#{option_value_size.variants.count})']")
+      end
     end
 
     context 'プロダクト一覧表示のレイアウト' do
