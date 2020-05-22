@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "products/show.html.erb", type: :view do
+RSpec.describe "Potepan::Products#show layout", type: :feature do
   let!(:product)         { create(:product) }
   let!(:variant)         { product.master }
   let!(:product_image1)  { create(:image, viewable: variant) }

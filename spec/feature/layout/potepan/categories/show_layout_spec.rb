@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "potepan/categories/show.html.erb", type: :view do
+RSpec.describe "Potepan::Categories#show layout", type: :feature do
   let(:taxon_attr) { attributes_for(:taxon, name: 'Bag', taxonomy_id: taxonomy.id) }
 
   let!(:taxonomy)    { create(:taxonomy, name: 'Category') }
