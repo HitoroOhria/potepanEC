@@ -24,23 +24,36 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
     context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
 
-      it { is_expected.to have_css('a', text: taxon_root.taxonomy.name, visible: false) }
+      context 'collapseのレイアウト' do
+        it { is_expected.to have_link(taxonomy.name) }
 
-      it { is_expected.to have_css('a', text: taxon_root.name,  visible: false) }
+        it { is_expected.to_not have_link(taxon_child.name, visible: true) }
 
-      it { is_expected.to have_css('a', text: taxon_child.name, visible: false) }
+        context 'collapseのリンクをクリックしたとき' do
+        before do
+          visit potepan_category_path(taxon_root.id)
+          click_link taxonomy.name
+        end
+
+        it { is_expected.to have_link("#{taxon_child.name} (#{taxon_child.products.count})") }
+        end
+      end
     end
 
     context 'カテゴリーパネルの「色から探す」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '色から探す') }
 
-      it { is_expected.to have_css('a', text: option_value_color.name) }
+      it { is_expected.to have_link("#{option_value_color.name} (#{option_type_color.products.count})") }
+
+      it { is_expected.to have_css('span' , text: "(#{option_type_color.products.count})") }
     end
 
     context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
 
-      it { is_expected.to have_css('a', text: option_value_size.name) }
+      it { is_expected.to have_link(option_value_size.name) }
+
+      it { is_expected.to have_css('span' , text: "(#{option_type_size.products.count})") }
     end
 
     context 'プロダクト一覧表示のレイアウト' do
