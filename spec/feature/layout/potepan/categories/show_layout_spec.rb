@@ -38,13 +38,13 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
       it { is_expected.to have_css('.panel-heading', text: '色から探す') }
 
       it '「色から探す」パネルの中に、カラー名のリンクがあること' do
-        is_expected.to have_xpath("//div[@class='panel-heading' and contains(text(), '色から探す')]
-                                    /../div/ul/li/a[contains(text(), '#{option_value_color.name}')]")
+        expect(find('.panel-heading', text: '色から探す').ancestor('.panel')).to \
+        have_css('a', text: option_value_color.name)
       end
 
-      it 'カラー名のリンクのテキスト部分に、span要素でproductsの個数が表示されていること' do
-        is_expected.to have_xpath("//a[contains(text(), '#{option_value_color.name}')]
-                                    /span[text()='(#{option_value_color.variants.count})']")
+      it 'カラー名のリンクのテキスト部分に、span要素でvariantsの個数が表示されていること' do
+        expect(find('a', text: option_value_color.name)).to \
+        have_css('span', text: "(#{option_value_color.variants.count})")
       end
     end
 
@@ -57,13 +57,13 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
       it { is_expected.to have_css('.panel-heading', text: 'サイズから探す') }
 
       it '「サイズから探す」パネルの中に、ザイズ名のリンクがあること' do
-        is_expected.to have_xpath("//div[@class='panel-heading' and contains(text(), 'サイズから探す')]
-                                    /../div/ul/li/a[contains(text(), '#{option_value_size.name}')]")
+        expect(find('.panel-heading', text: 'サイズから探す').ancestor('.panel')).to \
+        have_css('a', text: option_value_size.name)
       end
 
-      it 'サイズ名のリンクのテキスト部分に、span要素でproductsの個数が表示されていること' do
-        is_expected.to have_xpath("//a[contains(text(), '#{option_value_size.name}')]
-                                    /span[text()='(#{option_value_size.variants.count})']")
+      it 'サイズ名のリンクのテキスト部分に、span要素でvariantsの個数が表示されていること' do
+        expect(find('a', text: option_value_size.name)).to \
+        have_css('span', text: "(#{option_value_size.variants.count})")
       end
     end
 
