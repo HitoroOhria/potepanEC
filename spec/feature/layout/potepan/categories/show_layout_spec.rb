@@ -87,9 +87,9 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
         it { is_expected.to have_css('.productBox', count: 2) }
 
-        it { is_expected.to have_css('img', id: "product_image_#{root_product_image.id}") }
+        it { is_expected.to have_css("img#product_image_#{root_product_image.id}") }
 
-        it { is_expected.to have_css('img', id: "product_image_#{child_product_image.id}") }
+        it { is_expected.to have_css("img#product_image_#{child_product_image.id}") }
 
         it { is_expected.to have_css('h5', text: taxon_root_product.name) }
 
@@ -115,7 +115,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
         it { is_expected.to have_css('.productBox', count: 1) }
 
-        it { is_expected.to have_css('img', id: "product_image_#{child_product_image.id}") }
+        it { is_expected.to have_css("img#product_image_#{child_product_image.id}") }
 
         it { is_expected.to have_css('h5', text: taxon_child_product.name) }
 

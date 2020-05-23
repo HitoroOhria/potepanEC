@@ -22,13 +22,13 @@ RSpec.describe "Potepan::Products#show layout", type: :feature do
 
     it { is_expected.to have_css('p',  text: product.description) }
 
-    it { is_expected.to have_css('img', id: "large_image_#{product_image1.id}") }
+    it { is_expected.to have_css("img#large_image_#{product_image1.id}") }
 
-    it { is_expected.to have_css('img', id: "large_image_#{product_image2.id}") }
+    it { is_expected.to have_css("img#large_image_#{product_image2.id}") }
 
-    it { is_expected.to have_css('img', id: "small_image_#{product_image1.id}") }
+    it { is_expected.to have_css("img#small_image_#{product_image1.id}") }
 
-    it { is_expected.to have_css('img', id: "small_image_#{product_image2.id}") }
+    it { is_expected.to have_css("img#small_image_#{product_image2.id}") }
 
     it { is_expected.to have_link('一覧ページへ戻る', href: product_to_category_path(product)) }
   end
