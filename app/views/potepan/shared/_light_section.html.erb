@@ -12,6 +12,11 @@
           <li>
             <%= link_to 'Home', potepan_path %>
           </li>
+          <% if controller.controller_path == 'potepan/categories' %>
+            <li>
+              <%= link_to 'shop', '#' %>
+            </li>
+          <% end %>
           <li class="active"><%= show_name %></li>
         </ol>
       </div>
