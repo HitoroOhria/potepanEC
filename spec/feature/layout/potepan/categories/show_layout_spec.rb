@@ -39,12 +39,12 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
       it '「色から探す」パネルの中に、カラー名のリンクがあること' do
         expect(find('.panel-heading', text: '色から探す').ancestor('.panel')).to \
-        have_css('a', text: option_value_color.name)
+          have_css('a', text: option_value_color.name)
       end
 
       it 'カラー名のリンクのテキスト部分に、span要素でvariantsの個数が表示されていること' do
         expect(find('a', text: option_value_color.name)).to \
-        have_css('span', text: "(#{option_value_color.variants.count})")
+          have_css('span', text: "(#{option_value_color.variants.count})")
       end
     end
 
@@ -58,12 +58,12 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
       it '「サイズから探す」パネルの中に、ザイズ名のリンクがあること' do
         expect(find('.panel-heading', text: 'サイズから探す').ancestor('.panel')).to \
-        have_css('a', text: option_value_size.name)
+          have_css('a', text: option_value_size.name)
       end
 
       it 'サイズ名のリンクのテキスト部分に、span要素でvariantsの個数が表示されていること' do
         expect(find('a', text: option_value_size.name)).to \
-        have_css('span', text: "(#{option_value_size.variants.count})")
+          have_css('span', text: "(#{option_value_size.variants.count})")
       end
     end
 
@@ -99,6 +99,16 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
         it { is_expected.to have_css('h3', text: product_price(taxon_child_product)) }
 
+        it '親ノードTaxonの商品の画像にリンクが貼られていること' do
+          expect(find_link('', href: root_product_path)).to \
+            have_css("img#product_image_#{root_product_image.id}")
+        end
+
+        it '葉ノードTaxonの商品の画像にリンクが貼られていること' do
+          expect(find_link('', href: child_product_path)).to \
+            have_css("img#product_image_#{child_product_image.id}")
+        end
+
         it { is_expected.to have_link(taxon_root_product.name, href: root_product_path) }
 
         it { is_expected.to have_link(taxon_child_product.name, href: child_product_path) }
@@ -120,6 +130,11 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
         it { is_expected.to have_css('h5', text: taxon_child_product.name) }
 
         it { is_expected.to have_css('h3', text: product_price(taxon_child_product)) }
+
+        it '葉ノードTaxonの商品の画像にリンクが貼られていること' do
+          expect(find_link('', href: child_product_path)).to \
+            have_css("img#product_image_#{child_product_image.id}")
+        end
 
         it { is_expected.to have_link(taxon_child_product.name, href: child_product_path) }
 
