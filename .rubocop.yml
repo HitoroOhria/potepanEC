@@ -10,8 +10,11 @@ AllCops:
     - 'spec/rails_helper.rb'
 
 Layout/LineLength:
-
   Max: 105
+
+Layout/FirstArgumentIndentation:
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/BlockLength:
   Exclude:
