@@ -64,4 +64,15 @@ Rails.application.configure do
 
   # add white list ips under Docker
   config.web_console.whitelisted_ips = '0.0.0.0/0'
+
+  # Paperclip Setting
+  Paperclip.options[:command_path] = "/usr/local/bin/"
+
+  # Bullet Setting
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
 end

@@ -4,15 +4,20 @@
     <div class="row">
       <div class="col-xs-6">
         <div class="page-title">
-          <h2><%= product.name %></h2>
+          <h2><%= show_name %></h2>
         </div>
       </div>
       <div class="col-xs-6">
         <ol class="breadcrumb pull-right">
           <li>
-            <a href="index.html">Home</a>
+            <%= link_to 'Home', potepan_path %>
           </li>
-          <li class="active"><%= product.name %></li>
+          <% if controller.controller_path == 'potepan/categories' %>
+            <li>
+              <%= link_to 'shop', '#' %>
+            </li>
+          <% end %>
+          <li class="active"><%= show_name %></li>
         </ol>
       </div>
     </div>

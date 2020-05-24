@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     get :about_us,                  to: 'sample#about_us'
     get :tokushoho,                 to: 'sample#tokushoho'
     get :privacy_policy,            to: 'sample#privacy_policy'
-
-    resources :products, only: [:show]
+    resources :products,            only: [:show],                        param: :product_id
+    resources :categories,          only: [:show],                        param: :taxon_id
   end
 end
