@@ -24,7 +24,14 @@ Spree::Product.class_eval do
   end
 
   def all_other_products
-    Spree::Product.count == 1 ? [] : Spree::Product.find(*Spree::Product.all.map(&:id).to_a - [id])
+    case Spree::Product.count
+    when 1
+      []
+    when 2
+      [Spree::Product.find(*Spree::Product.all.map(&:id).to_a - [id])]
+    else
+      Spree::Product.find(*Spree::Product.all.map(&:id).to_a - [id])
+    end
   end
 
   def invalid_or_products(taxons)
