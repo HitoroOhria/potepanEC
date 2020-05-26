@@ -61,13 +61,15 @@
         </div>
       </div>
     </div>
-    <div class="row productsContent">
-      <div class="col-xs-12">
-        <div class="page-header">
-          <h4>関連商品</h4>
+    <% if @relation_products.present? %>
+      <div class="row productsContent">
+        <div class="col-xs-12">
+          <div class="page-header">
+            <h4>関連商品</h4>
+          </div>
         </div>
+        <%= render partial: 'product', collection: @relation_products %>
       </div>
-      <%= render partial: 'product', collection: @relation_products %>
-    </div>
+    <% end %>
   </div>
 </section>
