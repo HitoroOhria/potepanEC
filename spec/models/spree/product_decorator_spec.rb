@@ -96,4 +96,9 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
   end
+
+  describe '#relation_products' do
+    it 'ProductsController#showの@relation_productsのテストに委任する' do
+    end
+  end
 end
