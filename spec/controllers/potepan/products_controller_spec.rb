@@ -5,29 +5,25 @@ RSpec.describe Potepan::ProductsController, type: :controller do
     let(:taxon)   { create(:taxon) }
     let(:product) { taxon.products.create(attributes_for(:product, shipping_category_id: 1)) }
 
+    before do
+      get :show, params: { product_id: product.id }
+    end
+
     subject { response }
 
-    context 'レスポンス' do
-      before do
-        get :show, params: { product_id: product.id }
-      end
-
+    describe 'レスポンス' do
       it { is_expected.to have_http_status 200 }
 
       it { is_expected.to render_template :show }
     end
 
-    context '@product' do
-      before do
-        get :show, params: { product_id: product.id }
-      end
-
+    describe '@product' do
       it 'id属性がparams[:product_id]に対応したSpree::Productモデルオブジェクトである' do
         expect(assigns(:product)).to eq product
       end
     end
 
-    context '@relation_products' do
+    describe '@relation_products' do
       context '@productが所属しているカテゴリーがないとき' do
         let!(:taxon)   { create(:taxon) }
         let!(:product) { taxon.products.create(attributes_for(:product, shipping_category_id: 1)) }
@@ -42,10 +38,6 @@ RSpec.describe Potepan::ProductsController, type: :controller do
         it '@relation_productsは空である' do
           is_expected.to be_empty
         end
-
-        it '@relation_productsは配列である' do
-          expect(relation_products.class).to eq Array
-        end
       end
 
       context '@productが所属しているカテゴリーがあるとき' do
@@ -58,11 +50,10 @@ RSpec.describe Potepan::ProductsController, type: :controller do
         context 'カテゴリーが親ノードの時' do
           let!(:parent_taxon)          { create(:taxon) }
           let!(:child_taxon)           { parent_taxon.children.create(attributes_for(:taxon)) }
-          let!(:another_taxon)         { create(:taxon) }
           let!(:parent_taxon_product1) { parent_taxon.products.create(product_attributes1) }
           let!(:parent_taxon_product2) { parent_taxon.products.create(product_attributes2) }
           let!(:child_taxon_product)   { child_taxon.products.create(product_attributes3) }
-          let!(:another_taxon_product) { another_taxon.products.create(product_attributes4) }
+          let!(:another_taxon_product) { create(:product) }
 
           before do
             get :show, params: { product_id: parent_taxon_product1.id }
