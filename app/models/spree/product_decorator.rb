@@ -8,20 +8,10 @@ Spree::Product.class_eval do
   end
 
   def relation_products
-    taxons.present? ? distinct_products : []
-  end
-
-  private
-
-  def distinct_products
-    product_ids = taxons.flat_map { |taxon| taxon.all_products.pluck(:id) }
-    case product_ids.count
-    when 1
-      []
-    when 2
-      [Spree::Product.find(*product_ids.uniq - [id])]
+    if taxons.present?
+      Spree::Product.in_taxons(taxons).where.not(id: id).distinct
     else
-      Spree::Product.find(*product_ids.uniq - [id])
+      Spree::Taxon.new.products
     end
   end
 end
