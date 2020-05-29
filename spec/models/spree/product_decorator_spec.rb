@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe Spree::Product, type: :model do
   let(:viewable_type) { [:viewable_type, 'Spree::Variant'] }
 
-  let(:product)               { create(:product) }
-  let(:master_variant)        { product.master }
+  let(:product) { create(:product) }
+  let(:master_variant) { product.master }
   let(:master_variant_image1) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
   let(:master_variant_image2) { create(:image, [[:viewable_id, master_variant.id], viewable_type].to_h) }
-  let(:other_variant)         { create(:variant, product: product) }
-  let(:other_variant_image1)  { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
-  let(:other_variant_image2)  { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
+  let(:other_variant) { create(:variant, product: product) }
+  let(:other_variant_image1) { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
+  let(:other_variant_image2) { create(:image, [[:viewable_id, other_variant.id], viewable_type].to_h) }
 
   describe '#main_image' do
     subject { product.main_image }
@@ -98,7 +98,84 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   describe '#relation_products' do
-    it 'ProductsController#showの@relation_productsのテストに委任する' do
+    let(:product_attributes1) { attributes_for(:product, shipping_category_id: 1) }
+    let(:product_attributes2) { attributes_for(:product, shipping_category_id: 1) }
+    let(:product_attributes3) { attributes_for(:product, shipping_category_id: 1) }
+    let(:product_attributes4) { attributes_for(:product, shipping_category_id: 1) }
+    let(:product_attributes5) { attributes_for(:product, shipping_category_id: 1) }
+
+    before do
+      create(:product) # レシーバが所属するカテゴリー以外の商品は含まないことをテスト
+    end
+
+    context 'レシーバが所属するカテゴリーがない場合' do
+      let!(:product) { create(:product) }
+
+      it 'コレクションを返すこと' do
+        expect(product.relation_products.class).to eq Spree::Product.where(name: 'hoge').class
+      end
+    end
+
+    context 'レシーバが所属するカテゴリーに、レシーバ以外の商品がない時' do
+      let!(:product) { create(:product) }
+
+      before do
+        product.taxons.create(attributes_for(:taxon))
+      end
+
+      subject { product.relation_products }
+
+      it '空のコレクションを返すこと' do
+        is_expected.to eq []
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが親ノードの時' do
+      let!(:parent_taxon) { create(:taxon) }
+      let!(:child_taxon) { parent_taxon.children.create(attributes_for(:taxon)) }
+      let!(:parent_taxon_product1) { parent_taxon.products.create(product_attributes1) }
+      let!(:parent_taxon_product2) { parent_taxon.products.create(product_attributes2) }
+      let!(:child_taxon_product) { child_taxon.products.create(product_attributes3) }
+
+      subject { parent_taxon_product1.relation_products }
+
+      it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
+        is_expected.to eq [parent_taxon_product2, child_taxon_product]
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが中間ノードの時' do
+      let!(:parent_taxon) { create(:taxon) }
+      let!(:middle_taxon) { parent_taxon.children.create(attributes_for(:taxon)) }
+      let!(:leaf_taxon) { middle_taxon.children.create(attributes_for(:taxon)) }
+      let!(:parent_taxon_product) { parent_taxon.products.create(product_attributes1) }
+      let!(:middle_taxon_product1) { middle_taxon.products.create(product_attributes2) }
+      let!(:middle_taxon_product2) { middle_taxon.products.create(product_attributes3) }
+      let!(:leaf_taxon_product) { leaf_taxon.products.create(product_attributes4) }
+
+      before do
+        create(:product)
+      end
+
+      subject { middle_taxon_product1.relation_products }
+
+      it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
+        is_expected.to eq [middle_taxon_product2, leaf_taxon_product]
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが葉ノードの時' do
+      let!(:parent_taxon) { create(:taxon) }
+      let!(:child_taxon) { parent_taxon.children.create(attributes_for(:taxon)) }
+      let!(:parent_taxon_product) { parent_taxon.products.create(product_attributes1) }
+      let!(:child_taxon_product1) { child_taxon.products.create(product_attributes2) }
+      let!(:child_taxon_product2) { child_taxon.products.create(product_attributes3) }
+
+      subject { child_taxon_product1.relation_products }
+
+      it '所属するカテゴリーのみのproductsを返すこと' do
+        is_expected.to eq [child_taxon_product2]
+      end
     end
   end
 end
