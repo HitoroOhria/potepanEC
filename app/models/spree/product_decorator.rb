@@ -8,10 +8,6 @@ Spree::Product.class_eval do
   end
 
   def relation_products
-    if taxons.present?
-      Spree::Product.in_taxons(taxons).where.not(id: id).distinct
-    else
-      Spree::Taxon.new.products
-    end
+    Spree::Product.in_taxons(taxons).where.not(id: id).distinct
   end
 end
