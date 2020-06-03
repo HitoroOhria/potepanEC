@@ -28,7 +28,7 @@ RSpec.describe Potepan::ProductsController, type: :controller do
       let(:taxon)   { product.taxons.create(attributes_for(:taxon)) }
 
       before do
-        4.times { taxon.products.create(attributes_for(:product, shipping_category_id: 1)) }
+        create_list(:product, 5) { |product| product.taxons << taxon }
         get :show, params: { product_id: product.id }
       end
 
