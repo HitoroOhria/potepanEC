@@ -5,7 +5,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
 
   let!(:taxonomy)    { create(:taxonomy, name: 'Category') }
   let!(:taxon_root)  { taxonomy.root }
-  let!(:taxon_child) { taxon_root.children.create(taxon_attr) }
+  let!(:taxon_child) { create(:taxon, parent: taxon_root) }
 
   let!(:option_type_size)   { create(:option_type,  name: 'tshirt-size') }
   let!(:option_type_color)  { create(:option_type,  name: 'tshirt-color') }
@@ -68,13 +68,11 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
     end
 
     context 'プロダクト一覧表示のレイアウト' do
-      let(:product_attributes_1) { attributes_for(:product, name: 'Product1', shipping_category_id: 1) }
-      let(:product_attributes_2) { attributes_for(:product, name: 'Product2', shipping_category_id: 1) }
       let(:root_product_path)    { potepan_product_path(taxon_root_product.id) }
       let(:child_product_path)   { potepan_product_path(taxon_child_product.id) }
 
-      let!(:taxon_root_product)  { taxon_root.products.create(product_attributes_1) }
-      let!(:taxon_child_product) { taxon_child.products.create(product_attributes_2) }
+      let!(:taxon_root_product)  { create(:product, taxon_ids: taxon_root.id) }
+      let!(:taxon_child_product) { create(:product, taxon_ids: taxon_child.id) }
       let!(:root_product_image)  { create(:image, viewable: taxon_root_product.master) }
       let!(:child_product_image) { create(:image, viewable: taxon_child_product.master) }
 

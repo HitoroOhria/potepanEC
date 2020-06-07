@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Potepan::ProductsController, type: :controller do
   describe '#show' do
     let!(:taxon)   { create(:taxon) }
-    let!(:product) { taxon.products.create(attributes_for(:product, shipping_category_id: 1)) }
+    let!(:product) { create(:product, taxon_ids: taxon.id) }
 
     before do
       get :show, params: { product_id: product.id }
@@ -24,11 +24,11 @@ RSpec.describe Potepan::ProductsController, type: :controller do
     end
 
     describe '@relation_products' do
-      let(:product) { create(:product) }
-      let(:taxon)   { product.taxons.create(attributes_for(:taxon)) }
+      let(:taxon)   { create(:taxon) }
+      let(:product) { create(:product, taxon_ids: taxon.id) }
 
       before do
-        create_list(:product, 5) { |product| product.taxons << taxon }
+        create_list(:product, 5, taxon_ids: taxon.id)
         get :show, params: { product_id: product.id }
       end
 

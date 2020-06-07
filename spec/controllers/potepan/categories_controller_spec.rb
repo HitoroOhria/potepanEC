@@ -2,15 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Potepan::CategoriesController, type: :controller do
   describe '#show' do
-    let(:taxon_attr)           { attributes_for(:taxon, taxonomy: taxonomy) }
-    let(:product_attributes_1) { attributes_for(:product, name: 'Product1', shipping_category_id: 1) }
-    let(:product_attributes_2) { attributes_for(:product, name: 'Product2', shipping_category_id: 1) }
+    # let(:taxon_attr)           { attributes_for(:taxon, taxonomy: taxonomy) }
 
     let!(:taxonomy)            { create(:taxonomy) }
     let!(:taxon_root)          { taxonomy.root }
-    let!(:taxon_child)         { taxon_root.children.create(taxon_attr) }
-    let!(:taxon_root_product)  { taxon_root.products.create(product_attributes_1) }
-    let!(:taxon_child_product) { taxon_child.products.create(product_attributes_2) }
+    # let!(:taxon_child)         { taxon_root.children.create(taxon_attr) }
+    let!(:taxon_child)         { create(:taxon, parent: taxon_root) }
+    let!(:taxon_root_product)  { create(:product, taxon_ids: taxon_root.id) }
+    let!(:taxon_child_product) { create(:product, taxon_ids: taxon_child.id) }
 
     let!(:option_type_size)    { create(:option_type,  name: 'tshirt-size') }
     let!(:option_type_color)   { create(:option_type,  name: 'tshirt-color') }

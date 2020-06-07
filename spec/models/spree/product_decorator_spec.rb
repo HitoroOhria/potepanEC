@@ -98,30 +98,13 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   describe '#relation_products' do
-    let(:product_attributes1) { attributes_for(:product, shipping_category_id: 1) }
-    let(:product_attributes2) { attributes_for(:product, shipping_category_id: 1) }
-    let(:product_attributes3) { attributes_for(:product, shipping_category_id: 1) }
-    let(:product_attributes4) { attributes_for(:product, shipping_category_id: 1) }
-    let(:product_attributes5) { attributes_for(:product, shipping_category_id: 1) }
-
     before do
       create(:product) # レシーバが所属するカテゴリー以外の商品は含まないことをテスト
     end
 
-    context 'レシーバが所属するカテゴリーがない場合' do
-      let!(:product) { create(:product) }
-
-      it 'コレクションを返すこと' do
-        expect(product.relation_products.class).to eq Spree::Product.where(name: 'hoge').class
-      end
-    end
-
     context 'レシーバが所属するカテゴリーに、レシーバ以外の商品がない時' do
-      let!(:product) { create(:product) }
-
-      before do
-        product.taxons.create(attributes_for(:taxon))
-      end
+      let!(:taxon)   { create(:taxon) }
+      let!(:product) { create(:product, taxon_ids: taxon.id) }
 
       subject { product.relation_products }
 
@@ -133,9 +116,9 @@ RSpec.describe Spree::Product, type: :model do
     context 'レシーバの所属するカテゴリーが親ノードの時' do
       let!(:parent_taxon)          { create(:taxon) }
       let!(:child_taxon)           { parent_taxon.children.create(attributes_for(:taxon)) }
-      let!(:parent_taxon_product1) { parent_taxon.products.create(product_attributes1) }
-      let!(:parent_taxon_product2) { parent_taxon.products.create(product_attributes2) }
-      let!(:child_taxon_product)   { child_taxon.products.create(product_attributes3) }
+      let!(:parent_taxon_product1) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:parent_taxon_product2) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:child_taxon_product)   { create(:product, taxon_ids: child_taxon.id) }
 
       subject { parent_taxon_product1.relation_products }
 
@@ -146,12 +129,12 @@ RSpec.describe Spree::Product, type: :model do
 
     context 'レシーバの所属するカテゴリーが中間ノードの時' do
       let!(:parent_taxon)          { create(:taxon) }
-      let!(:middle_taxon)          { parent_taxon.children.create(attributes_for(:taxon)) }
-      let!(:leaf_taxon)            { middle_taxon.children.create(attributes_for(:taxon)) }
-      let!(:parent_taxon_product)  { parent_taxon.products.create(product_attributes1) }
-      let!(:middle_taxon_product1) { middle_taxon.products.create(product_attributes2) }
-      let!(:middle_taxon_product2) { middle_taxon.products.create(product_attributes3) }
-      let!(:leaf_taxon_product)    { leaf_taxon.products.create(product_attributes4) }
+      let!(:middle_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:leaf_taxon)            { create(:taxon, parent: middle_taxon) }
+      let!(:parent_taxon_product)  { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:middle_taxon_product1) { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:middle_taxon_product2) { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:leaf_taxon_product)    { create(:product, taxon_ids: leaf_taxon.id) }
 
       before do
         create(:product)
@@ -166,10 +149,10 @@ RSpec.describe Spree::Product, type: :model do
 
     context 'レシーバの所属するカテゴリーが葉ノードの時' do
       let!(:parent_taxon)         { create(:taxon) }
-      let!(:child_taxon)          { parent_taxon.children.create(attributes_for(:taxon)) }
-      let!(:parent_taxon_product) { parent_taxon.products.create(product_attributes1) }
-      let!(:child_taxon_product1) { child_taxon.products.create(product_attributes2) }
-      let!(:child_taxon_product2) { child_taxon.products.create(product_attributes3) }
+      let!(:child_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:parent_taxon_product) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:child_taxon_product1) { create(:product, taxon_ids: child_taxon.id) }
+      let!(:child_taxon_product2) { create(:product, taxon_ids: child_taxon.id) }
 
       subject { child_taxon_product1.relation_products }
 
