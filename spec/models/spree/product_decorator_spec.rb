@@ -98,15 +98,22 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   describe '#relation_products' do
-    before do
-      create(:product) # レシーバが所属するカテゴリー以外の商品は含まないことをテスト
-    end
+    subject { receiver_product.relation_products }
 
     context 'レシーバが所属するカテゴリーに、レシーバ以外の商品がない時' do
-      let!(:taxon)   { create(:taxon) }
-      let!(:product) { create(:product, taxon_ids: taxon.id) }
+      let!(:taxon)            { create(:taxon) }
+      let!(:receiver_product) { create(:product, taxon_ids: taxon.id) }
 
-      subject { product.relation_products }
+      it '空のコレクションを返すこと' do
+        is_expected.to eq []
+      end
+    end
+
+    context 'レシーバが所属するカテゴリーとは、別のカテゴリーに所属する商品が存在している時' do
+      let!(:taxon)            { create(:taxon) }
+      let!(:receiver_product) { create(:product, taxon_ids: taxon.id) }
+      let!(:another_taxon)    { create(:taxon) }
+      let!(:another_product)  { create(:product, taxon_ids: another_taxon.id) }
 
       it '空のコレクションを返すこと' do
         is_expected.to eq []
@@ -114,16 +121,14 @@ RSpec.describe Spree::Product, type: :model do
     end
 
     context 'レシーバの所属するカテゴリーが親ノードの時' do
-      let!(:parent_taxon)          { create(:taxon) }
-      let!(:child_taxon)           { parent_taxon.children.create(attributes_for(:taxon)) }
-      let!(:parent_taxon_product1) { create(:product, taxon_ids: parent_taxon.id) }
-      let!(:parent_taxon_product2) { create(:product, taxon_ids: parent_taxon.id) }
-      let!(:child_taxon_product)   { create(:product, taxon_ids: child_taxon.id) }
-
-      subject { parent_taxon_product1.relation_products }
+      let!(:parent_taxon)         { create(:taxon) }
+      let!(:child_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:receiver_product)     { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:parent_taxon_product) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:child_taxon_product)  { create(:product, taxon_ids: child_taxon.id) }
 
       it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
-        is_expected.to eq [parent_taxon_product2, child_taxon_product]
+        is_expected.to eq [parent_taxon_product, child_taxon_product]
       end
     end
 
@@ -132,18 +137,12 @@ RSpec.describe Spree::Product, type: :model do
       let!(:middle_taxon)          { create(:taxon, parent: parent_taxon) }
       let!(:leaf_taxon)            { create(:taxon, parent: middle_taxon) }
       let!(:parent_taxon_product)  { create(:product, taxon_ids: parent_taxon.id) }
-      let!(:middle_taxon_product1) { create(:product, taxon_ids: middle_taxon.id) }
-      let!(:middle_taxon_product2) { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:receiver_product)      { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:middle_taxon_product)  { create(:product, taxon_ids: middle_taxon.id) }
       let!(:leaf_taxon_product)    { create(:product, taxon_ids: leaf_taxon.id) }
 
-      before do
-        create(:product)
-      end
-
-      subject { middle_taxon_product1.relation_products }
-
       it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
-        is_expected.to eq [middle_taxon_product2, leaf_taxon_product]
+        is_expected.to eq [middle_taxon_product, leaf_taxon_product]
       end
     end
 
@@ -151,13 +150,11 @@ RSpec.describe Spree::Product, type: :model do
       let!(:parent_taxon)         { create(:taxon) }
       let!(:child_taxon)          { create(:taxon, parent: parent_taxon) }
       let!(:parent_taxon_product) { create(:product, taxon_ids: parent_taxon.id) }
-      let!(:child_taxon_product1) { create(:product, taxon_ids: child_taxon.id) }
-      let!(:child_taxon_product2) { create(:product, taxon_ids: child_taxon.id) }
-
-      subject { child_taxon_product1.relation_products }
+      let!(:receiver_product)     { create(:product, taxon_ids: child_taxon.id) }
+      let!(:child_taxon_product)  { create(:product, taxon_ids: child_taxon.id) }
 
       it '所属するカテゴリーのみのproductsを返すこと' do
-        is_expected.to eq [child_taxon_product2]
+        is_expected.to eq [child_taxon_product]
       end
     end
   end
