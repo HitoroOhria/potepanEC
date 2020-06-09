@@ -19,7 +19,6 @@ Layout/FirstArgumentIndentation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
-    - 'app/models/spree/product_decorator.rb'
 
 Metrics/MethodLength:
   Max: 13
