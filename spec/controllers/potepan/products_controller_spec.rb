@@ -24,9 +24,6 @@ RSpec.describe Potepan::ProductsController, type: :controller do
     end
 
     describe '@relation_products' do
-      let(:taxon)   { create(:taxon) }
-      let(:product) { create(:product, taxon_ids: taxon.id) }
-
       before do
         create_list(:product, 5, taxon_ids: taxon.id)
         get :show, params: { product_id: product.id }
