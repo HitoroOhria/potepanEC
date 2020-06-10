@@ -3,6 +3,6 @@ class Potepan::ProductsController < ApplicationController
     @product = Spree::Product.find(params[:product_id])
     @relation_products = @product.relation_products
                                  .includes(master: %i[default_price images])
-                                 .limit(Constants::RELATION_PRODUCTS_COUNT)
+                                 .limit(RELATION_PRODUCTS_COUNT)
   end
 end

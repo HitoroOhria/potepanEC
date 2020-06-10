@@ -1,3 +1,2 @@
-module Constants
-  RELATION_PRODUCTS_COUNT = 4
-end
+# Potepan::ProductsController
+RELATION_PRODUCTS_COUNT = 4
