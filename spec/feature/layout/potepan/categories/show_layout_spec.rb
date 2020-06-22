@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "Potepan::Categories#show layout", type: :feature do
-  let(:taxon_attr) { attributes_for(:taxon, name: 'Bag', taxonomy_id: taxonomy.id) }
+  let(:taxonomy)            { create(:taxonomy, name: 'Category') }
+  let!(:taxon_root)         { taxonomy.root }
+  let!(:taxon_child)        { create(:taxon, parent: taxon_root) }
 
-  let!(:taxonomy)    { create(:taxonomy, name: 'Category') }
-  let!(:taxon_root)  { taxonomy.root }
-  let!(:taxon_child) { create(:taxon, parent: taxon_root) }
-
-  let!(:option_type_size)   { create(:option_type,  name: 'tshirt-size') }
-  let!(:option_type_color)  { create(:option_type,  name: 'tshirt-color') }
+  let(:option_type_size)    { create(:option_type,  name: 'tshirt-size') }
+  let(:option_type_color)   { create(:option_type,  name: 'tshirt-color') }
   let!(:option_value_size)  { create(:option_value, option_type: option_type_size) }
   let!(:option_value_color) { create(:option_value, option_type: option_type_color) }
 

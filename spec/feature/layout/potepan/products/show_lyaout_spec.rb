@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Potepan::Products#show layout", type: :feature do
-  let!(:product)         { create(:product) }
-  let!(:variant)         { product.master }
+  let(:taxon)            { create(:taxon) }
+  let!(:product)         { create(:product, taxon_ids: taxon.id) }
+  let(:variant)          { product.master }
   let!(:product_image1)  { create(:image, viewable: variant) }
   let!(:product_image2)  { create(:image, viewable: variant) }
 
   before do
-    product.taxons.create(attributes_for(:taxon))
     visit potepan_product_path(product.id)
   end
 
