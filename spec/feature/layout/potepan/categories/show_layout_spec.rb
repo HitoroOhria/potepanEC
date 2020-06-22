@@ -21,7 +21,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
   feature 'GET potepan/categories/:taxon_id' do
     it { is_expected.to have_title full_title(taxon_root.name) }
 
-    context 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
+    describe 'カテゴリーパネルの「商品カテゴリー」のレイアウト' do
       it { is_expected.to have_css('.panel-heading', text: '商品カテゴリー') }
 
       it { is_expected.to have_link(taxonomy.name) }
@@ -29,7 +29,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
       it { is_expected.to have_link("#{taxon_child.name} (#{taxon_child.products.count})") }
     end
 
-    context 'カテゴリーパネルの「色から探す」のレイアウト' do
+    describe 'カテゴリーパネルの「色から探す」のレイアウト' do
       before do
         rand(3).times { option_value_color.variants.create(attributes_for(:variant)) }
         visit potepan_category_path(taxon_root.id)
@@ -48,7 +48,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
       end
     end
 
-    context 'カテゴリーパネルの「サイズから探す」のレイアウト' do
+    describe 'カテゴリーパネルの「サイズから探す」のレイアウト' do
       before do
         rand(3).times { option_value_size.variants.create(attributes_for(:variant)) }
         visit potepan_category_path(taxon_root.id)
@@ -67,7 +67,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
       end
     end
 
-    context 'プロダクト一覧表示のレイアウト' do
+    describe 'プロダクト一覧表示のレイアウト' do
       let(:root_product_path)    { potepan_product_path(taxon_root_product.id) }
       let(:child_product_path)   { potepan_product_path(taxon_child_product.id) }
 
@@ -116,7 +116,7 @@ RSpec.describe "Potepan::Categories#show layout", type: :feature do
         it { is_expected.to have_link(product_price(taxon_child_product), href: child_product_path) }
       end
 
-      context 'ルーティングの:taxon_idのモデルオブジェクトが葉ノードの時' do
+      describe 'ルーティングの:taxon_idのモデルオブジェクトが葉ノードの時' do
         before do
           visit potepan_category_path(taxon_child.id)
         end
