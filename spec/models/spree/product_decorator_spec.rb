@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Product, type: :model do
-  let(:viewable_type) { [:viewable_type, 'Spree::Variant'] }
+  let(:viewable_type)         { [:viewable_type, 'Spree::Variant'] }
 
   let(:product)               { create(:product) }
   let(:master_variant)        { product.master }
@@ -93,6 +93,68 @@ RSpec.describe Spree::Product, type: :model do
 
       it '返すコレクションの1個目のオブジェクトは、DBに保存されていないインスタンスであること' do
         expect(show_images.first.new_record?).to eq true
+      end
+    end
+  end
+
+  describe '#relation_products' do
+    subject { receiver_product.relation_products }
+
+    context 'レシーバが所属するカテゴリーに、レシーバ以外の商品がない時' do
+      let!(:taxon)            { create(:taxon) }
+      let!(:receiver_product) { create(:product, taxon_ids: taxon.id) }
+
+      it '空のコレクションを返すこと' do
+        is_expected.to eq []
+      end
+    end
+
+    context 'レシーバが所属するカテゴリーとは、別のカテゴリーに所属する商品が存在している時' do
+      let!(:taxon)            { create(:taxon) }
+      let!(:receiver_product) { create(:product, taxon_ids: taxon.id) }
+      let!(:another_taxon)    { create(:taxon) }
+      let!(:another_product)  { create(:product, taxon_ids: another_taxon.id) }
+
+      it '空のコレクションを返すこと' do
+        is_expected.to eq []
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが親ノードの時' do
+      let!(:parent_taxon)         { create(:taxon) }
+      let!(:child_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:receiver_product)     { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:parent_taxon_product) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:child_taxon_product)  { create(:product, taxon_ids: child_taxon.id) }
+
+      it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
+        is_expected.to eq [parent_taxon_product, child_taxon_product]
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが中間ノードの時' do
+      let!(:parent_taxon)          { create(:taxon) }
+      let!(:middle_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:leaf_taxon)            { create(:taxon, parent: middle_taxon) }
+      let!(:parent_taxon_product)  { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:receiver_product)      { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:middle_taxon_product)  { create(:product, taxon_ids: middle_taxon.id) }
+      let!(:leaf_taxon_product)    { create(:product, taxon_ids: leaf_taxon.id) }
+
+      it '所属するカテゴリーとその子孫ノードのproductsを返すこと' do
+        is_expected.to eq [middle_taxon_product, leaf_taxon_product]
+      end
+    end
+
+    context 'レシーバの所属するカテゴリーが葉ノードの時' do
+      let!(:parent_taxon)         { create(:taxon) }
+      let!(:child_taxon)          { create(:taxon, parent: parent_taxon) }
+      let!(:parent_taxon_product) { create(:product, taxon_ids: parent_taxon.id) }
+      let!(:receiver_product)     { create(:product, taxon_ids: child_taxon.id) }
+      let!(:child_taxon_product)  { create(:product, taxon_ids: child_taxon.id) }
+
+      it '所属するカテゴリーのみのproductsを返すこと' do
+        is_expected.to eq [child_taxon_product]
       end
     end
   end

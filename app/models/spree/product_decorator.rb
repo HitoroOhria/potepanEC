@@ -6,4 +6,8 @@ Spree::Product.class_eval do
   def show_images
     images.presence || variant_images.presence || (images.new && images)
   end
+
+  def relation_products
+    Spree::Product.in_taxons(taxons).where.not(id: id).distinct
+  end
 end
