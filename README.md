@@ -9,9 +9,9 @@
 -->
 
 **[公開終了しました]**
-- ホームページ：~~http://www.stylishcoffee.work/potepan~~
-- 商品詳細ページ：~~http://www.stylishcoffee.work/potepan/products/1~~
-- カテゴリーページ：~~http://www.stylishcoffee.work/potepan/categories/1~~
+- ~~ホームページ~~
+- ~~商品詳細ページ~~
+- ~~カテゴリーページ~~
 
 ## アプリケーションの概要
 
